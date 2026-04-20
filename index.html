@@ -32,7 +32,6 @@
             line-height: 1.5;
         }
 
-        /* CABEÇALHO PADRÃO */
         .navbar {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
@@ -77,7 +76,21 @@
             border-bottom: 2px solid var(--gold);
         }
 
-        /* CONTEÚDO PRINCIPAL */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .progress-badge {
+            background: var(--gold-dark);
+            color: var(--bg-dark);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
         .container {
             max-width: 700px;
             margin: 0 auto;
@@ -349,18 +362,20 @@
     </style>
 </head>
 <body>
-    <!-- CABEÇALHO PADRÃO -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="https://lrpluciano-pereira.github.io/index/" class="logo">
-                <span class="logo-icon">⚖️</span>
-                <span>Ética Digital</span>
+            <a href="https://lrpluciano-pereira.github.io/index.html" class="logo">
+                <span>⚖️ Ética Digital</span>
             </a>
             <div class="nav-links">
-                <a href="https://lrpluciano-pereira.github.io/index/">🏠 Início</a>
-                <a href="https://lrpluciano-pereira.github.io/teorico/">📚 Módulo Teórico</a>
-                <a href="https://lrpluciano-pereira.github.io/simulador/" class="active">🎮 Simulador</a>
-                <a href="https://lrpluciano-pereira.github.io/forum/">💬 Atividades</a>
+                <a href="https://lrpluciano-pereira.github.io/index.html">🏠 Início</a>
+                <a href="https://lrpluciano-pereira.github.io/conteudo.html">📚 Conteúdo</a>
+                <a href="https://lrpluciano-pereira.github.io/simulador.html" class="active">🎮 Simulador</a>
+                <a href="https://lrpluciano-pereira.github.io/forum.html">💬 Atividades</a>
+            </div>
+            <div class="user-info">
+                <span class="progress-badge" id="progressBadge">0%</span>
+                <span id="userName">👤 Aluno</span>
             </div>
         </div>
     </nav>
@@ -435,7 +450,7 @@
                     <div id="encerramentoMsg"></div>
                     <div id="resumoFinal" class="resumo-card"></div>
                     <button class="action-btn" id="recarregarBtn">✨ Recomeçar simulação</button>
-                    <button class="btn-voltar" id="voltarInicioBtn">🏠 Voltar ao Início</button>
+                    <button class="btn-voltar" id="voltarInicioBtn">🏠 Voltar ao Dashboard</button>
                 </div>
             </div>
             <div class="footer">
@@ -445,9 +460,16 @@
     </div>
 
     <script>
-        // ============================================
+        // Carregar nome do usuário
+        const usuarioNome = localStorage.getItem('usuario_nome') || 'Aluno';
+        document.getElementById('userName').innerHTML = `👤 ${usuarioNome}`;
+
+        // Verificar login
+        if (!localStorage.getItem('usuario_logado')) {
+            window.location.href = 'https://lrpluciano-pereira.github.io/login.html';
+        }
+
         // 6 CENÁRIOS EXPANDIDOS
-        // ============================================
         const cenarios = [
             {
                 id: 1,
@@ -499,12 +521,10 @@
             }
         ];
 
-        // Variáveis de estado
         let currentCenarioIndex = 0;
         let sliderElement = null;
         let historicoEscolhas = [];
 
-        // Elementos DOM
         const tela1Div = document.getElementById('tela1');
         const telaDilemaDiv = document.getElementById('telaDilema');
         const telaEncerramentoDiv = document.getElementById('telaEncerramento');
@@ -514,14 +534,12 @@
         const eudaimoniaSpan = document.getElementById('eudaimoniaValor');
         const scenarioCounter = document.getElementById('scenarioCounter');
 
-        // Função para interpretar a decisão baseada no valor do slider (0-100)
         function interpretarDecisao(valor) {
             if (valor <= 33) return 'falta';
             if (valor >= 67) return 'excesso';
             return 'justoMeio';
         }
 
-        // Atualizar o label do slider
         function updateSliderLabel(valor) {
             const sliderValueDisplay = document.getElementById('sliderValueDisplay');
             if (!sliderValueDisplay) return;
@@ -531,14 +549,12 @@
             else sliderValueDisplay.innerHTML = '✨ Justo Meio (equilíbrio)';
         }
 
-        // Gerar feedback baseado no tipo de decisão e cenário
         function gerarFeedback(tipoDecisao, cenario) {
             if (tipoDecisao === 'falta') return cenario.faltaFeedback;
             if (tipoDecisao === 'excesso') return cenario.excessoFeedback;
             return cenario.justoMeioFeedback;
         }
 
-        // Calcular o indicador de Eudaimonia
         function calcularEudaimonia(tipoDecisao) {
             if (tipoDecisao === 'justoMeio') {
                 return "🌿 Eudaimonia elevada! Esta escolha tende ao florescimento humano, agindo conforme a razão prática.";
@@ -549,7 +565,6 @@
             return "⚠️ Eudaimonia comprometida. O excesso digital obscurece a temperança e a atenção ao necessário.";
         }
 
-        // Salvar resultado no localStorage
         function salvarResultadoSimulacao(cenario, decisao, feedback) {
             let historico = JSON.parse(localStorage.getItem('simulacoes_realizadas') || '[]');
             historico.push({
@@ -561,7 +576,6 @@
             localStorage.setItem('simulacoes_realizadas', JSON.stringify(historico));
         }
 
-        // Atualizar indicador de progresso (pontos)
         function atualizarProgressoIndicador() {
             const container = document.getElementById('progressIndicator');
             if (!container) return;
@@ -576,7 +590,6 @@
             container.innerHTML = html;
         }
 
-        // Carregar um cenário específico
         function carregarCenario(index) {
             const cenario = cenarios[index];
             dilemaTitulo.innerText = cenario.titulo;
@@ -594,7 +607,6 @@
             atualizarProgressoIndicador();
         }
 
-        // Mostrar feedback após a decisão
         function mostrarFeedback(tipo, cenario) {
             const msg = gerarFeedback(tipo, cenario);
             feedbackTexto.innerText = msg;
@@ -610,7 +622,6 @@
             });
         }
 
-        // Confirmar decisão
         function onConfirmarDecisao() {
             const valor = parseInt(sliderElement.value, 10);
             const tipo = interpretarDecisao(valor);
@@ -618,7 +629,6 @@
             mostrarFeedback(tipo, cenarioAtual);
         }
 
-        // Avançar para o próximo cenário
         function novoCenario() {
             if (currentCenarioIndex + 1 < cenarios.length) {
                 currentCenarioIndex++;
@@ -628,7 +638,6 @@
             }
         }
 
-        // Encerrar e mostrar resultado final
         function encerrarAtividade() {
             telaDilemaDiv.style.display = 'none';
             telaEncerramentoDiv.style.display = 'block';
@@ -661,7 +670,6 @@
                 <strong style="color:var(--gold)">Decisões equilibradas (Justo Meio): ${totalJustoMeio} de ${totalCenarios}</strong></p>
             `;
             
-            // Gerar resumo detalhado
             let resumoHtml = `<h4>📊 Seu desempenho detalhado:</h4>`;
             historicoEscolhas.forEach((h, idx) => {
                 let statusIcon = '';
@@ -684,7 +692,6 @@
             document.getElementById('resumoFinal').innerHTML = resumoHtml;
         }
 
-        // Reiniciar completamente a simulação
         function reiniciarCompleto() {
             currentCenarioIndex = 0;
             historicoEscolhas = [];
@@ -693,7 +700,6 @@
             telaEncerramentoDiv.style.display = 'none';
         }
 
-        // Iniciar o desafio
         function iniciarDesafio() {
             tela1Div.style.display = 'none';
             telaDilemaDiv.style.display = 'block';
@@ -703,7 +709,6 @@
             carregarCenario(0);
         }
 
-        // Eventos e inicialização
         document.addEventListener('DOMContentLoaded', () => {
             sliderElement = document.getElementById('decisaoSlider');
             const confirmBtn = document.getElementById('confirmarDecisaoBtn');
@@ -726,7 +731,7 @@
             if (resetGlobalBtn) resetGlobalBtn.addEventListener('click', reiniciarCompleto);
             if (voltarInicioBtn) {
                 voltarInicioBtn.addEventListener('click', () => {
-                    window.location.href = 'https://lrpluciano-pereira.github.io/index/';
+                    window.location.href = 'https://lrpluciano-pereira.github.io/index.html';
                 });
             }
             if (highContrastBtn) {
