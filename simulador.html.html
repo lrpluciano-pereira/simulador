@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Simulador | Ética Aristotélica no Cotidiano Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a1628;
+            --bg-card: #0f1a2f;
+            --bg-light: #16213e;
+            --gold: #d4af37;
+            --gold-dark: #b8942e;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa7b9;
+            --border: #1e2a44;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .navbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+            padding: 8px 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gold);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            min-height: calc(100vh - 160px);
+        }
+
+        .simulator-card {
+            background: var(--bg-card);
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #0b1222;
+            padding: 24px 28px;
+            border-bottom: 2px solid var(--gold);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: var(--gold);
+            font-size: 1.6rem;
+        }
+
+        .content {
+            padding: 32px 28px;
+        }
+
+        .quote {
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 4px solid var(--gold);
+            padding: 16px 20px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            font-style: italic;
+        }
+
+        .scenario-text {
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .scenario-description {
+            color: #b9c3d4;
+            margin-bottom: 32px;
+        }
+
+        .slider-container {
+            margin: 35px 0 25px;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .lack-label { color: #f28b82; }
+        .mean-label { color: var(--gold); }
+        .excess-label { color: #fbbc04; }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #f28b82, var(--gold), #fbbc04);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--gold);
+            border: 2px solid #fff;
+        }
+
+        .slider-value-indicator {
+            text-align: center;
+            margin-top: 12px;
+            background: #0b1222;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 40px;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .action-btn {
+            background: var(--gold);
+            border: none;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #0a1628;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 20px;
+        }
+
+        .action-btn:hover {
+            background: #e6c453;
+            transform: scale(0.98);
+        }
+
+        .feedback-area {
+            margin-top: 30px;
+            background: #0b1222;
+            border-radius: 24px;
+            padding: 22px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .eudaimonia {
+            margin-top: 20px;
+            background: rgba(212, 175, 55, 0.12);
+            border-radius: 40px;
+            padding: 12px 18px;
+            text-align: center;
+        }
+
+        .eudaimonia span {
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        .next-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 12px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .secondary-btn:hover {
+            background: #d4af371a;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .accessibility-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 28px;
+            gap: 12px;
+            background: #0b1222;
+        }
+
+        .access-btn {
+            background: none;
+            border: 1px solid #556b8a;
+            color: #ccd6f0;
+            padding: 4px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .footer {
+            background: var(--bg-card);
+            text-align: center;
+            padding: 18px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 550px) {
+            .content { padding: 24px 18px; }
+            .scenario-text { font-size: 1.2rem; }
+        }
+
+        .high-contrast {
+            filter: contrast(1.2) brightness(1.05);
+        }
+        .high-contrast body {
+            background: #000 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">⚖️ Ética Digital</div>
+            <div class="nav-links">
+                <a href="index.html">🏠 Início</a>
+                <a href="teorico.html">📚 Módulo Teórico</a>
+                <a href="simulador.html" class="active">🎮 Simulador</a>
+                <a href="forum.html">💬 Atividades</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="simulator-card">
+            <div class="accessibility-bar">
+                <button class="access-btn" id="highContrastBtn">🌓 Alto Contraste</button>
+                <button class="access-btn" id="resetBtn">⟳ Reiniciar</button>
+            </div>
+            <div class="header">
+                <h1>⚖️ Simulador Interativo</h1>
+                <p>Justo Meio · Phronesis · Eudaimonia</p>
+            </div>
+
+            <div class="content" id="dynamicContent">
+                <div id="tela1">
+                    <div class="quote">
+                        <div class="quote-text">“A virtude é um meio-termo entre dois vícios, um por excesso e outro por falta.”</div>
+                        <div class="quote-author" style="margin-top:10px; color:var(--gold);">— Aristóteles, Ética a Nicômaco</div>
+                    </div>
+                    <p style="color:#ccd6f0; margin-bottom: 20px;">No cotidiano digital, somos desafiados a encontrar equilíbrio. Este simulador apresenta dilemas reais para você praticar o <strong>Justo Meio</strong>.</p>
+                    <button class="action-btn" id="iniciarDesafioBtn">🎯 Iniciar Desafio</button>
+                </div>
+
+                <div id="telaDilema" style="display: none;">
+                    <div class="scenario-text" id="dilemaTitulo">📱 Jantar em família</div>
+                    <div class="scenario-description" id="dilemaDescricao">Você está em um jantar de família. Seu celular vibra com notificações...</div>
+                    
+                    <div class="slider-container">
+                        <div class="slider-labels">
+                            <span class="lack-label">❌ FALTA</span>
+                            <span class="mean-label">✨ JUSTO MEIO</span>
+                            <span class="excess-label">⚠️ EXCESSO</span>
+                        </div>
+                        <input type="range" id="decisaoSlider" min="0" max="100" value="50">
+                        <div style="text-align: center; margin-top: 10px;">
+                            <span class="slider-value-indicator" id="sliderValueDisplay">⚖️ Equilíbrio</span>
+                        </div>
+                    </div>
+
+                    <button class="action-btn" id="confirmarDecisaoBtn">📌 Confirmar decisão</button>
+
+                    <div id="feedbackContainer" style="display: none;">
+                        <div class="feedback-area">
+                            <div class="feedback-title">📜 Análise Aristotélica</div>
+                            <div class="feedback-message" id="feedbackTexto"></div>
+                        </div>
+                        <div class="eudaimonia">
+                            🌟 <strong>Eudaimonia</strong><br>
+                            <span id="eudaimoniaValor">🔹 Em análise</span>
+                        </div>
+                        <div class="next-buttons">
+                            <button class="secondary-btn" id="novoCenarioBtn">🔄 Novo cenário</button>
+                            <button class="secondary-btn" id="encerrarBtn">🏁 Encerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="telaEncerramento" style="display: none;">
+                    <div class="quote">
+                        <div class="quote-text">“A felicidade é uma atividade da alma conforme a virtude perfeita.”</div>
+                        <div class="quote-author" style="margin-top:10px; color:var(--gold);">— Aristóteles</div>
+                    </div>
+                    <p style="color:#ccd6f0;">Atividade finalizada. Suas escolhas foram registradas!</p>
+                    <button class="action-btn" id="recarregarBtn">✨ Recomeçar simulação</button>
+                </div>
+            </div>
+            <div class="footer" style="border-top: 1px solid var(--border);">
+                <p>Licença Creative Commons BY-NC-SA | Luciano Rodrigues Pereira</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cenarios = [
+            {
+                titulo: "📱 Jantar em família",
+                descricao: "Você está em um jantar de família. Seu celular vibra com notificações de um grupo de amigos comentando algo engraçado. Qual sua atitude?",
+                faltaFeedback: "📵 Isolamento: Você ignora completamente a família e o celular, mas ao custo de se distanciar dos afetos. Aristóteles diria que a sociabilidade é parte da natureza humana; a falta de interação priva a virtude da amizade.",
+                excessoFeedback: "📳 Hiperconectividade: Você abandona a conversa familiar para responder todas as mensagens. O excesso de prazer digital afasta a presença, vício por excesso.",
+                justoMeioFeedback: "✅ Equilíbrio: Você percebe as notificações, mas decide finalizar a refeição com atenção à família e responde os amigos depois. Aplicou a phronesis (sabedoria prática). Justo Meio!"
+            },
+            {
+                titulo: "🌐 Redes sociais e autoestima",
+                descricao: "Você vê stories de amigos em festas enquanto está estudando para uma prova. Começa a sentir ansiedade e FOMO. O que fazer?",
+                faltaFeedback: "🚫 Falta: Você desativa todas as redes e ignora qualquer interação social por dias. Isolamento excessivo pode gerar melancolia.",
+                excessoFeedback: "🌀 Excesso: Você para de estudar, passa horas rolando o feed e se comparando. Ansiedade aumenta. O vício nas redes enfraquece a moderação.",
+                justoMeioFeedback: "⚖️ Justo Meio: Você reconhece o sentimento, estuda por mais 40 minutos e depois reserva um tempo para redes sociais. Excelência!"
+            }
+        ];
+
+        let currentCenarioIndex = 0;
+        let sliderElement = null;
+
+        const tela1Div = document.getElementById('tela1');
+        const telaDilemaDiv = document.getElementById('telaDilema');
+        const telaEncerramentoDiv = document.getElementById('telaEncerramento');
+        const dilemaTitulo = document.getElementById('dilemaTitulo');
+        const dilemaDescricao = document.getElementById('dilemaDescricao');
+        const feedbackTexto = document.getElementById('feedbackTexto');
+        const eudaimoniaSpan = document.getElementById('eudaimoniaValor');
+
+        function interpretarDecisao(valor) {
+            if (valor <= 33) return 'falta';
+            if (valor >= 67) return 'excesso';
+            return 'justoMeio';
+        }
+
+        function updateSliderLabel(valor) {
+            const sliderValueDisplay = document.getElementById('sliderValueDisplay');
+            if (!sliderValueDisplay) return;
+            const tipo = interpretarDecisao(valor);
+            if (tipo === 'falta') sliderValueDisplay.innerHTML = '❌ Falta (isolamento)';
+            else if (tipo === 'excesso') sliderValueDisplay.innerHTML = '⚠️ Excesso (hiperconectividade)';
+            else sliderValueDisplay.innerHTML = '✨ Justo Meio (equilíbrio)';
+        }
+
+        function gerarFeedback(tipoDecisao, cenario) {
+            if (tipoDecisao === 'falta') return cenario.faltaFeedback;
+            if (tipoDecisao === 'excesso') return cenario.excessoFeedback;
+            return cenario.justoMeioFeedback;
+        }
+
+        function calcularEudaimonia(tipoDecisao) {
+            if (tipoDecisao === 'justoMeio') return "🌿 Eudaimonia elevada! Escolha tende ao florescimento humano.";
+            if (tipoDecisao === 'falta') return "🍂 Eudaimonia em risco. Falta de engajamento social.";
+            return "⚠️ Eudaimonia comprometida. Excesso digital obscurece a temperança.";
+        }
+
+        function salvarResultadoSimulacao(cenario, decisao, feedback) {
+            let historico = JSON.parse(localStorage.getItem('simulacoes_realizadas') || '[]');
+            historico.push({
+                data: new Date().toISOString(),
+                cenario: cenario.titulo,
+                decisao: decisao,
+                feedback_resumido: feedback.substring(0, 100)
+            });
+            localStorage.setItem('simulacoes_realizadas', JSON.stringify(historico));
+        }
+
+        function carregarCenario(index) {
+            const cenario = cenarios[index % cenarios.length];
+            dilemaTitulo.innerText = cenario.titulo;
+            dilemaDescricao.innerText = cenario.descricao;
+            if (sliderElement) {
+                sliderElement.value = 50;
+                updateSliderLabel(50);
+            }
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            if (feedbackContainer) feedbackContainer.style.display = 'none';
+        }
+
+        function mostrarFeedback(tipo, cenario) {
+            const msg = gerarFeedback(tipo, cenario);
+            feedbackTexto.innerText = msg;
+            eudaimoniaSpan.innerText = calcularEudaimonia(tipo);
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            if (feedbackContainer) feedbackContainer.style.display = 'block';
+            salvarResultadoSimulacao(cenario, tipo, msg);
+        }
+
+        function onConfirmarDecisao() {
+            const valor = parseInt(sliderElement.value, 10);
+            const tipo = interpretarDecisao(valor);
+            const cenarioAtual = cenarios[currentCenarioIndex % cenarios.length];
+            mostrarFeedback(tipo, cenarioAtual);
+        }
+
+        function novoCenario() {
+            currentCenarioIndex = (currentCenarioIndex + 1) % cenarios.length;
+            carregarCenario(currentCenarioIndex);
+        }
+
+        function encerrarAtividade() {
+            telaDilemaDiv.style.display = 'none';
+            telaEncerramentoDiv.style.display = 'block';
+            tela1Div.style.display = 'none';
+        }
+
+        function reiniciarCompleto() {
+            currentCenarioIndex = 0;
+            tela1Div.style.display = 'block';
+            telaDilemaDiv.style.display = 'none';
+            telaEncerramentoDiv.style.display = 'none';
+        }
+
+        function iniciarDesafio() {
+            tela1Div.style.display = 'none';
+            telaDilemaDiv.style.display = 'block';
+            telaEncerramentoDiv.style.display = 'none';
+            currentCenarioIndex = 0;
+            carregarCenario(0);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            sliderElement = document.getElementById('decisaoSlider');
+            const confirmBtn = document.getElementById('confirmarDecisaoBtn');
+            const novoCenarioBtn = document.getElementById('novoCenarioBtn');
+            const encerrarBtn = document.getElementById('encerrarBtn');
+            const iniciarBtn = document.getElementById('iniciarDesafioBtn');
+            const recarregarBtn = document.getElementById('recarregarBtn');
+            const resetGlobalBtn = document.getElementById('resetBtn');
+            const highContrastBtn = document.getElementById('highContrastBtn');
+
+            if (sliderElement) {
+                sliderElement.addEventListener('input', (e) => updateSliderLabel(parseInt(e.target.value, 10)));
+            }
+            if (confirmBtn) confirmBtn.addEventListener('click', onConfirmarDecisao);
+            if (novoCenarioBtn) novoCenarioBtn.addEventListener('click', novoCenario);
+            if (encerrarBtn) encerrarBtn.addEventListener('click', encerrarAtividade);
+            if (iniciarBtn) iniciarBtn.addEventListener('click', iniciarDesafio);
+            if (recarregarBtn) recarregarBtn.addEventListener('click', reiniciarCompleto);
+            if (resetGlobalBtn) resetGlobalBtn.addEventListener('click', reiniciarCompleto);
+            if (highContrastBtn) {
+                highContrastBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('high-contrast');
+                });
+            }
+            updateSliderLabel(50);
+        });
+    </script>
+</body>
+</html>
