@@ -20,6 +20,9 @@
             --text-primary: #ffffff;
             --text-secondary: #9aa7b9;
             --border: #1e2a44;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
         }
 
         body {
@@ -29,7 +32,7 @@
             line-height: 1.5;
         }
 
-        /* ===== CABEÇALHO PADRÃO ===== */
+        /* CABEÇALHO PADRÃO */
         .navbar {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
@@ -56,10 +59,6 @@
             text-decoration: none;
         }
 
-        .logo-icon {
-            margin-right: 8px;
-        }
-
         .nav-links {
             display: flex;
             gap: 24px;
@@ -73,21 +72,12 @@
             padding: 8px 0;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover, .nav-links a.active {
             color: var(--gold);
             border-bottom: 2px solid var(--gold);
         }
 
-        .nav-links a.active {
-            color: var(--gold);
-            border-bottom: 2px solid var(--gold);
-        }
-
-        .user-info {
-            color: var(--text-secondary);
-        }
-        /* ===== FIM CABEÇALHO ===== */
-
+        /* CONTEÚDO PRINCIPAL */
         .container {
             max-width: 700px;
             margin: 0 auto;
@@ -114,6 +104,12 @@
             font-size: 1.6rem;
         }
 
+        .scenario-counter {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
         .content {
             padding: 32px 28px;
         }
@@ -137,6 +133,7 @@
         .scenario-description {
             color: #b9c3d4;
             margin-bottom: 32px;
+            line-height: 1.6;
         }
 
         .slider-container {
@@ -150,15 +147,15 @@
             font-weight: 600;
         }
 
-        .lack-label { color: #f28b82; }
+        .lack-label { color: var(--danger); }
         .mean-label { color: var(--gold); }
-        .excess-label { color: #fbbc04; }
+        .excess-label { color: var(--warning); }
 
         input[type="range"] {
             width: 100%;
             height: 6px;
             -webkit-appearance: none;
-            background: linear-gradient(to right, #f28b82, var(--gold), #fbbc04);
+            background: linear-gradient(to right, var(--danger), var(--gold), var(--warning));
             border-radius: 10px;
             outline: none;
         }
@@ -246,14 +243,11 @@
             cursor: pointer;
             font-weight: 600;
             flex: 1;
+            transition: 0.2s;
         }
 
         .secondary-btn:hover {
             background: #d4af371a;
-        }
-
-        .hidden {
-            display: none;
         }
 
         .accessibility-bar {
@@ -272,6 +266,38 @@
             border-radius: 30px;
             cursor: pointer;
             font-size: 0.75rem;
+            transition: 0.2s;
+        }
+
+        .access-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s;
+        }
+
+        .progress-dot.completed {
+            background: var(--gold);
+        }
+
+        .progress-dot.current {
+            background: var(--gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 8px var(--gold);
         }
 
         .footer {
@@ -283,9 +309,35 @@
             font-size: 0.7rem;
         }
 
+        .resumo-card {
+            background: #0b1222;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+
+        .resumo-card h4 {
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .btn-voltar {
+            background: var(--success);
+            color: var(--bg-dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 16px;
+            width: 100%;
+        }
+
         @media (max-width: 550px) {
             .content { padding: 24px 18px; }
             .scenario-text { font-size: 1.2rem; }
+            .next-buttons { flex-direction: column; }
         }
 
         .high-contrast {
@@ -310,9 +362,6 @@
                 <a href="https://lrpluciano-pereira.github.io/simulador/" class="active">🎮 Simulador</a>
                 <a href="https://lrpluciano-pereira.github.io/forum/">💬 Atividades</a>
             </div>
-            <div class="user-info">
-                <span>👤 Aluno</span>
-            </div>
         </div>
     </nav>
 
@@ -320,7 +369,7 @@
         <div class="simulator-card">
             <div class="accessibility-bar">
                 <button class="access-btn" id="highContrastBtn">🌓 Alto Contraste</button>
-                <button class="access-btn" id="resetBtn">⟳ Reiniciar</button>
+                <button class="access-btn" id="resetBtn">⟳ Reiniciar Simulação</button>
             </div>
             <div class="header">
                 <h1>⚖️ Simulador Interativo</h1>
@@ -328,18 +377,22 @@
             </div>
 
             <div class="content" id="dynamicContent">
+                <!-- TELA INICIAL -->
                 <div id="tela1">
                     <div class="quote">
                         <div class="quote-text">“A virtude é um meio-termo entre dois vícios, um por excesso e outro por falta.”</div>
                         <div class="quote-author" style="margin-top:10px; color:var(--gold);">— Aristóteles, Ética a Nicômaco</div>
                     </div>
-                    <p style="color:#ccd6f0; margin-bottom: 20px;">No cotidiano digital, somos desafiados a encontrar equilíbrio. Este simulador apresenta dilemas reais para você praticar o <strong>Justo Meio</strong>.</p>
+                    <p style="color:#ccd6f0; margin-bottom: 20px;">No cotidiano digital, somos desafiados a encontrar equilíbrio. Este simulador apresenta <strong>6 dilemas reais</strong> para você praticar o <strong>Justo Meio</strong>.</p>
+                    <p style="color:#9aa7b9; font-size:0.9rem; margin-bottom: 20px;">📌 Como funciona: Use o slider para escolher entre <strong style="color:var(--danger)">FALTA</strong> (isolamento/omissão), <strong style="color:var(--gold)">JUSTO MEIO</strong> (equilíbrio) ou <strong style="color:var(--warning)">EXCESSO</strong> (hiperconectividade/exagero).</p>
                     <button class="action-btn" id="iniciarDesafioBtn">🎯 Iniciar Desafio</button>
                 </div>
 
+                <!-- TELA DOS DILEMAS -->
                 <div id="telaDilema" style="display: none;">
+                    <div class="scenario-counter" id="scenarioCounter">Cenário 1 / 6</div>
                     <div class="scenario-text" id="dilemaTitulo">📱 Jantar em família</div>
-                    <div class="scenario-description" id="dilemaDescricao">Você está em um jantar de família. Seu celular vibra com notificações...</div>
+                    <div class="scenario-description" id="dilemaDescricao"></div>
                     
                     <div class="slider-container">
                         <div class="slider-labels">
@@ -361,34 +414,43 @@
                             <div class="feedback-message" id="feedbackTexto"></div>
                         </div>
                         <div class="eudaimonia">
-                            🌟 <strong>Eudaimonia</strong><br>
+                            🌟 <strong>Eudaimonia (Florescimento)</strong><br>
                             <span id="eudaimoniaValor">🔹 Em análise</span>
                         </div>
                         <div class="next-buttons">
-                            <button class="secondary-btn" id="novoCenarioBtn">🔄 Novo cenário</button>
-                            <button class="secondary-btn" id="encerrarBtn">🏁 Encerrar</button>
+                            <button class="secondary-btn" id="novoCenarioBtn">🔄 Próximo cenário</button>
+                            <button class="secondary-btn" id="encerrarBtn">🏁 Encerrar e ver resultado</button>
                         </div>
                     </div>
+                    
+                    <div class="progress-indicator" id="progressIndicator"></div>
                 </div>
 
+                <!-- TELA DE ENCERRAMENTO / RESULTADO -->
                 <div id="telaEncerramento" style="display: none;">
                     <div class="quote">
                         <div class="quote-text">“A felicidade é uma atividade da alma conforme a virtude perfeita.”</div>
                         <div class="quote-author" style="margin-top:10px; color:var(--gold);">— Aristóteles</div>
                     </div>
-                    <p style="color:#ccd6f0;">Atividade finalizada. Suas escolhas foram registradas!</p>
+                    <div id="encerramentoMsg"></div>
+                    <div id="resumoFinal" class="resumo-card"></div>
                     <button class="action-btn" id="recarregarBtn">✨ Recomeçar simulação</button>
+                    <button class="btn-voltar" id="voltarInicioBtn">🏠 Voltar ao Início</button>
                 </div>
             </div>
-            <div class="footer" style="border-top: 1px solid var(--border);">
+            <div class="footer">
                 <p>Licença Creative Commons BY-NC-SA | Luciano Rodrigues Pereira</p>
             </div>
         </div>
     </div>
 
     <script>
+        // ============================================
+        // 6 CENÁRIOS EXPANDIDOS
+        // ============================================
         const cenarios = [
             {
+                id: 1,
                 titulo: "📱 Jantar em família",
                 descricao: "Você está em um jantar de família. Seu celular vibra com notificações de um grupo de amigos comentando algo engraçado. Qual sua atitude?",
                 faltaFeedback: "📵 Isolamento: Você ignora completamente a família e o celular, mas ao custo de se distanciar dos afetos. Aristóteles diria que a sociabilidade é parte da natureza humana; a falta de interação priva a virtude da amizade.",
@@ -396,17 +458,53 @@
                 justoMeioFeedback: "✅ Equilíbrio: Você percebe as notificações, mas decide finalizar a refeição com atenção à família e responde os amigos depois. Aplicou a phronesis (sabedoria prática). Justo Meio!"
             },
             {
+                id: 2,
                 titulo: "🌐 Redes sociais e autoestima",
-                descricao: "Você vê stories de amigos em festas enquanto está estudando para uma prova. Começa a sentir ansiedade e FOMO. O que fazer?",
-                faltaFeedback: "🚫 Falta: Você desativa todas as redes e ignora qualquer interação social por dias. Isolamento excessivo pode gerar melancolia.",
-                excessoFeedback: "🌀 Excesso: Você para de estudar, passa horas rolando o feed e se comparando. Ansiedade aumenta. O vício nas redes enfraquece a moderação.",
-                justoMeioFeedback: "⚖️ Justo Meio: Você reconhece o sentimento, estuda por mais 40 minutos e depois reserva um tempo para redes sociais. Excelência!"
+                descricao: "Você vê stories de amigos em festas enquanto está estudando para uma prova importante. Começa a sentir ansiedade e FOMO (medo de estar perdendo algo). O que fazer?",
+                faltaFeedback: "🚫 Falta: Você desativa todas as redes e ignora qualquer interação social por dias. Isolamento excessivo pode gerar melancolia, fugindo do equilíbrio entre lazer e dever.",
+                excessoFeedback: "🌀 Excesso: Você para de estudar, passa horas rolando o feed e se comparando. Ansiedade aumenta. O vício nas redes enfraquece a virtude da moderação.",
+                justoMeioFeedback: "⚖️ Justo Meio: Você reconhece o sentimento, respira, estuda por mais 40 minutos e depois reserva um tempo para redes sociais. Controle racional dos desejos. Excelência!"
+            },
+            {
+                id: 3,
+                titulo: "💼 Trabalho em equipe online",
+                descricao: "Seu grupo de trabalho tem um prazo apertado. Alguns colegas não estão respondendo no grupo do WhatsApp. Você fica frustrado e pensa em excluí-los do grupo. O que faz?",
+                faltaFeedback: "😤 Falta: Você exclui os colegas sem conversar. Perde a oportunidade de diálogo e prejudica o trabalho em equipe. A falta de paciência compromete a virtude da justiça.",
+                excessoFeedback: "📨 Excesso: Você envia dezenas de mensagens, liga para todos várias vezes e cobra publicamente. Gera constrangimento e estresse. Excesso de cobrança é vício.",
+                justoMeioFeedback: "🤝 Justo Meio: Você envia uma mensagem privada perguntando se há algum problema e oferece ajuda. Demonstra phronesis ao equilibrar prazo e relações humanas."
+            },
+            {
+                id: 4,
+                titulo: "📱 Uso do celular antes de dormir",
+                descricao: "São 23h30, você está na cama e pega o celular para 'só mais 5 minutos'. Já faz uma hora que está rolando o feed. Amanhã tem aula cedo. O que fazer?",
+                faltaFeedback: "😴 Falta: Você desliga o celular e guarda em outra sala, mas fica ansioso pensando no que perdeu. A falta de um desligamento gradual pode gerar ansiedade.",
+                excessoFeedback: "📱 Excesso: Você continua até 2h da manhã. No dia seguinte, está exausto e não rende nas aulas. O excesso de telas prejudica a temperança e a saúde.",
+                justoMeioFeedback: "🌙 Justo Meio: Você ativa o modo 'não perturbe', coloca o celular longe da cama e decide que amanhã verá as novidades. Equilíbrio entre lazer digital e descanso."
+            },
+            {
+                id: 5,
+                titulo: "💬 Comentários negativos online",
+                descricao: "Você postou uma opinião e recebeu vários comentários agressivos. Alguns são ofensivos. Como você reage?",
+                faltaFeedback: "🤐 Falta: Você apaga tudo e nunca mais posta nada. O isolamento digital por medo de críticas impede o desenvolvimento da coragem intelectual.",
+                excessoFeedback: "🔥 Excesso: Você responde cada comentário com agressividade, alimentando uma discussão pública. A ira descontrolada é vício por excesso.",
+                justoMeioFeedback: "🕊️ Justo Meio: Você responde educadamente aos comentários que trazem argumentos e ignora os agressivos. Se necessário, bloqueia. Aplica a virtude da paciência e da justiça."
+            },
+            {
+                id: 6,
+                titulo: "🎮 Tempo de tela e hobbies",
+                descricao: "Você adora jogar videogame, mas percebe que está deixando de fazer exercícios físicos e encontrar amigos pessoalmente. Como equilibrar?",
+                faltaFeedback: "🎲 Falta: Você para completamente de jogar, mas fica entediado e sente falta. A abstinência total pode ser tão prejudicial quanto o excesso.",
+                excessoFeedback: "🕹️ Excesso: Você joga 8 horas por dia, negligencia estudos, saúde e relacionamentos. O vício em jogos é um desequilíbrio claro.",
+                justoMeioFeedback: "⚖️ Justo Meio: Você define um limite de 2 horas por dia para jogos, intercala com atividades físicas e mantém encontros sociais. Encontrou seu ponto de equilíbrio!"
             }
         ];
 
+        // Variáveis de estado
         let currentCenarioIndex = 0;
         let sliderElement = null;
+        let historicoEscolhas = [];
 
+        // Elementos DOM
         const tela1Div = document.getElementById('tela1');
         const telaDilemaDiv = document.getElementById('telaDilema');
         const telaEncerramentoDiv = document.getElementById('telaEncerramento');
@@ -414,34 +512,44 @@
         const dilemaDescricao = document.getElementById('dilemaDescricao');
         const feedbackTexto = document.getElementById('feedbackTexto');
         const eudaimoniaSpan = document.getElementById('eudaimoniaValor');
+        const scenarioCounter = document.getElementById('scenarioCounter');
 
+        // Função para interpretar a decisão baseada no valor do slider (0-100)
         function interpretarDecisao(valor) {
             if (valor <= 33) return 'falta';
             if (valor >= 67) return 'excesso';
             return 'justoMeio';
         }
 
+        // Atualizar o label do slider
         function updateSliderLabel(valor) {
             const sliderValueDisplay = document.getElementById('sliderValueDisplay');
             if (!sliderValueDisplay) return;
             const tipo = interpretarDecisao(valor);
-            if (tipo === 'falta') sliderValueDisplay.innerHTML = '❌ Falta (isolamento)';
-            else if (tipo === 'excesso') sliderValueDisplay.innerHTML = '⚠️ Excesso (hiperconectividade)';
+            if (tipo === 'falta') sliderValueDisplay.innerHTML = '❌ Falta (isolamento/omissão)';
+            else if (tipo === 'excesso') sliderValueDisplay.innerHTML = '⚠️ Excesso (hiperconectividade/exagero)';
             else sliderValueDisplay.innerHTML = '✨ Justo Meio (equilíbrio)';
         }
 
+        // Gerar feedback baseado no tipo de decisão e cenário
         function gerarFeedback(tipoDecisao, cenario) {
             if (tipoDecisao === 'falta') return cenario.faltaFeedback;
             if (tipoDecisao === 'excesso') return cenario.excessoFeedback;
             return cenario.justoMeioFeedback;
         }
 
+        // Calcular o indicador de Eudaimonia
         function calcularEudaimonia(tipoDecisao) {
-            if (tipoDecisao === 'justoMeio') return "🌿 Eudaimonia elevada! Escolha tende ao florescimento humano.";
-            if (tipoDecisao === 'falta') return "🍂 Eudaimonia em risco. Falta de engajamento social.";
-            return "⚠️ Eudaimonia comprometida. Excesso digital obscurece a temperança.";
+            if (tipoDecisao === 'justoMeio') {
+                return "🌿 Eudaimonia elevada! Esta escolha tende ao florescimento humano, agindo conforme a razão prática.";
+            }
+            if (tipoDecisao === 'falta') {
+                return "🍂 Eudaimonia em risco. A falta de engajamento pode afastar a vida plena em comunidade.";
+            }
+            return "⚠️ Eudaimonia comprometida. O excesso digital obscurece a temperança e a atenção ao necessário.";
         }
 
+        // Salvar resultado no localStorage
         function salvarResultadoSimulacao(cenario, decisao, feedback) {
             let historico = JSON.parse(localStorage.getItem('simulacoes_realizadas') || '[]');
             historico.push({
@@ -453,18 +561,40 @@
             localStorage.setItem('simulacoes_realizadas', JSON.stringify(historico));
         }
 
+        // Atualizar indicador de progresso (pontos)
+        function atualizarProgressoIndicador() {
+            const container = document.getElementById('progressIndicator');
+            if (!container) return;
+            
+            let html = '';
+            for (let i = 0; i < cenarios.length; i++) {
+                let classe = '';
+                if (i < currentCenarioIndex) classe = 'completed';
+                if (i === currentCenarioIndex) classe = 'current';
+                html += `<div class="progress-dot ${classe}"></div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        // Carregar um cenário específico
         function carregarCenario(index) {
-            const cenario = cenarios[index % cenarios.length];
+            const cenario = cenarios[index];
             dilemaTitulo.innerText = cenario.titulo;
             dilemaDescricao.innerText = cenario.descricao;
+            scenarioCounter.innerText = `Cenário ${index + 1} / ${cenarios.length}`;
+            
             if (sliderElement) {
                 sliderElement.value = 50;
                 updateSliderLabel(50);
             }
+            
             const feedbackContainer = document.getElementById('feedbackContainer');
             if (feedbackContainer) feedbackContainer.style.display = 'none';
+            
+            atualizarProgressoIndicador();
         }
 
+        // Mostrar feedback após a decisão
         function mostrarFeedback(tipo, cenario) {
             const msg = gerarFeedback(tipo, cenario);
             feedbackTexto.innerText = msg;
@@ -472,41 +602,108 @@
             const feedbackContainer = document.getElementById('feedbackContainer');
             if (feedbackContainer) feedbackContainer.style.display = 'block';
             salvarResultadoSimulacao(cenario, tipo, msg);
+            
+            historicoEscolhas.push({
+                cenario: cenario.titulo,
+                decisao: tipo,
+                justoMeio: tipo === 'justoMeio'
+            });
         }
 
+        // Confirmar decisão
         function onConfirmarDecisao() {
             const valor = parseInt(sliderElement.value, 10);
             const tipo = interpretarDecisao(valor);
-            const cenarioAtual = cenarios[currentCenarioIndex % cenarios.length];
+            const cenarioAtual = cenarios[currentCenarioIndex];
             mostrarFeedback(tipo, cenarioAtual);
         }
 
+        // Avançar para o próximo cenário
         function novoCenario() {
-            currentCenarioIndex = (currentCenarioIndex + 1) % cenarios.length;
-            carregarCenario(currentCenarioIndex);
+            if (currentCenarioIndex + 1 < cenarios.length) {
+                currentCenarioIndex++;
+                carregarCenario(currentCenarioIndex);
+            } else {
+                encerrarAtividade();
+            }
         }
 
+        // Encerrar e mostrar resultado final
         function encerrarAtividade() {
             telaDilemaDiv.style.display = 'none';
             telaEncerramentoDiv.style.display = 'block';
             tela1Div.style.display = 'none';
+            
+            const totalJustoMeio = historicoEscolhas.filter(h => h.justoMeio).length;
+            const totalCenarios = historicoEscolhas.length;
+            
+            let mensagemResumo = '';
+            let conselhoFinal = '';
+            let emoji = '';
+            
+            if (totalJustoMeio === totalCenarios) {
+                emoji = '🏆';
+                mensagemResumo = 'Excelente! Você encontrou o Justo Meio em todas as situações!';
+                conselhoFinal = 'Você demonstrou phronesis (sabedoria prática) em cada decisão. Continue assim!';
+            } else if (totalJustoMeio >= totalCenarios / 2) {
+                emoji = '🌟';
+                mensagemResumo = 'Bom trabalho! Você acertou o equilíbrio na maioria das situações.';
+                conselhoFinal = 'Continue refletindo sobre suas escolhas digitais. O caminho da virtude é uma prática diária.';
+            } else {
+                emoji = '📚';
+                mensagemResumo = 'Continue praticando! A virtude é um hábito que se desenvolve com o tempo.';
+                conselhoFinal = 'Revise o módulo teórico e tente novamente. Cada escolha é uma oportunidade de aprendizado.';
+            }
+            
+            document.getElementById('encerramentoMsg').innerHTML = `
+                <p style="font-size:1.2rem; text-align:center;">${emoji} <strong>Simulação concluída!</strong></p>
+                <p style="text-align:center;">Você analisou <strong>${totalCenarios}</strong> situações do cotidiano digital.<br>
+                <strong style="color:var(--gold)">Decisões equilibradas (Justo Meio): ${totalJustoMeio} de ${totalCenarios}</strong></p>
+            `;
+            
+            // Gerar resumo detalhado
+            let resumoHtml = `<h4>📊 Seu desempenho detalhado:</h4>`;
+            historicoEscolhas.forEach((h, idx) => {
+                let statusIcon = '';
+                let statusColor = '';
+                if (h.justoMeio) {
+                    statusIcon = '✅';
+                    statusColor = 'var(--success)';
+                } else if (h.decisao === 'falta') {
+                    statusIcon = '❌';
+                    statusColor = 'var(--danger)';
+                } else {
+                    statusIcon = '⚠️';
+                    statusColor = 'var(--warning)';
+                }
+                resumoHtml += `<p style="margin: 8px 0;"><span style="color:${statusColor}">${statusIcon}</span> <strong>${idx+1}. ${h.cenario}</strong>: ${h.justoMeio ? 'Justo Meio ✓' : (h.decisao === 'falta' ? 'Falta' : 'Excesso')}</p>`;
+            });
+            resumoHtml += `<hr style="border-color:var(--border); margin: 16px 0;">`;
+            resumoHtml += `<p><strong>💭 Reflexão:</strong> ${conselhoFinal}</p>`;
+            
+            document.getElementById('resumoFinal').innerHTML = resumoHtml;
         }
 
+        // Reiniciar completamente a simulação
         function reiniciarCompleto() {
             currentCenarioIndex = 0;
+            historicoEscolhas = [];
             tela1Div.style.display = 'block';
             telaDilemaDiv.style.display = 'none';
             telaEncerramentoDiv.style.display = 'none';
         }
 
+        // Iniciar o desafio
         function iniciarDesafio() {
             tela1Div.style.display = 'none';
             telaDilemaDiv.style.display = 'block';
             telaEncerramentoDiv.style.display = 'none';
             currentCenarioIndex = 0;
+            historicoEscolhas = [];
             carregarCenario(0);
         }
 
+        // Eventos e inicialização
         document.addEventListener('DOMContentLoaded', () => {
             sliderElement = document.getElementById('decisaoSlider');
             const confirmBtn = document.getElementById('confirmarDecisaoBtn');
@@ -516,6 +713,7 @@
             const recarregarBtn = document.getElementById('recarregarBtn');
             const resetGlobalBtn = document.getElementById('resetBtn');
             const highContrastBtn = document.getElementById('highContrastBtn');
+            const voltarInicioBtn = document.getElementById('voltarInicioBtn');
 
             if (sliderElement) {
                 sliderElement.addEventListener('input', (e) => updateSliderLabel(parseInt(e.target.value, 10)));
@@ -526,6 +724,11 @@
             if (iniciarBtn) iniciarBtn.addEventListener('click', iniciarDesafio);
             if (recarregarBtn) recarregarBtn.addEventListener('click', reiniciarCompleto);
             if (resetGlobalBtn) resetGlobalBtn.addEventListener('click', reiniciarCompleto);
+            if (voltarInicioBtn) {
+                voltarInicioBtn.addEventListener('click', () => {
+                    window.location.href = 'https://lrpluciano-pereira.github.io/index/';
+                });
+            }
             if (highContrastBtn) {
                 highContrastBtn.addEventListener('click', () => {
                     document.body.classList.toggle('high-contrast');
