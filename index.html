@@ -2,357 +2,132 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Simulador | Ética Aristotélica no Cotidiano Digital</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-dark: #0a1628;
-            --bg-card: #0f1a2f;
-            --bg-light: #16213e;
-            --gold: #d4af37;
-            --gold-dark: #b8942e;
-            --text-primary: #ffffff;
-            --text-secondary: #9aa7b9;
-            --border: #1e2a44;
-            --danger: #e74c3c;
-            --warning: #f39c12;
+            --bg-dark: #0a1628; --bg-card: #0f1a2f; --bg-light: #16213e;
+            --gold: #d4af37; --gold-dark: #b8942e;
+            --text-primary: #ffffff; --text-secondary: #c5d0e6;
+            --border: #1e2a44; --success: #2ecc71; --danger: #e74c3c; --warning: #f39c12;
         }
-
-        body {
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        .navbar {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 24px;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--gold);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-            padding: 8px 0;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--gold);
-            border-bottom: 2px solid var(--gold);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 32px 24px;
-        }
-
-        .simulator-card {
-            background: var(--bg-card);
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-
-        .header {
-            background: #0b1222;
-            padding: 24px;
-            border-bottom: 2px solid var(--gold);
-            text-align: center;
-        }
-
-        .header h1 {
-            color: var(--gold);
-        }
-
-        .content {
-            padding: 32px;
-        }
-
-        .quote {
-            background: rgba(212,175,55,0.08);
-            border-left: 4px solid var(--gold);
-            padding: 16px 20px;
-            border-radius: 20px;
-            margin-bottom: 28px;
-            font-style: italic;
-        }
-
-        .scenario-text {
-            font-size: 1.35rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-        }
-
-        .scenario-description {
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-        }
-
-        .slider-container {
-            margin: 35px 0;
-        }
-
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .lack-label { color: var(--danger); }
-        .mean-label { color: var(--gold); }
-        .excess-label { color: var(--warning); }
-
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
-            -webkit-appearance: none;
-            background: linear-gradient(to right, var(--danger), var(--gold), var(--warning));
-            border-radius: 10px;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            background: var(--gold);
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff;
-        }
-
-        .action-btn {
-            background: var(--gold);
-            width: 100%;
-            padding: 16px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #0a1628;
-            border: none;
-            border-radius: 60px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .action-btn:hover {
-            background: #e6c453;
-        }
-
-        .feedback-area {
-            margin-top: 30px;
-            background: #0b1222;
-            border-radius: 24px;
-            padding: 22px;
-            border-left: 4px solid var(--gold);
-        }
-
-        .eudaimonia {
-            margin-top: 20px;
-            background: rgba(212,175,55,0.12);
-            border-radius: 40px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .next-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .secondary-btn {
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 12px;
-            border-radius: 60px;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .footer {
-            background: var(--bg-card);
-            text-align: center;
-            padding: 18px;
-            border-top: 1px solid var(--border);
-            font-size: 0.7rem;
-        }
-
-        @media (max-width: 550px) {
-            .content { padding: 24px; }
-        }
+        body { font-family: 'Segoe UI', 'Roboto', sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #0d1a35 100%); color: var(--text-primary); line-height: 1.5; }
+        .navbar { background: rgba(15, 26, 47, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .logo { font-size: 1.4rem; font-weight: 700; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo span { background: var(--gold-dark); width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 28px; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; transition: all 0.2s; padding: 8px 0; font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+        .user-info { display: flex; align-items: center; gap: 20px; }
+        .user-name { background: var(--bg-light); padding: 6px 14px; border-radius: 30px; font-size: 0.85rem; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+        .simulator-card { background: var(--bg-card); border-radius: 32px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .simulator-header { background: linear-gradient(135deg, var(--gold-dark), var(--gold)); padding: 28px 32px; text-align: center; color: var(--bg-dark); }
+        .simulator-header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+        .progress-section { background: var(--bg-light); padding: 20px 28px; border-bottom: 1px solid var(--border); }
+        .progress-stats { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.85rem; }
+        .progress-bar-bg { background: var(--bg-dark); border-radius: 20px; height: 8px; overflow: hidden; }
+        .progress-fill { background: var(--gold); width: 0%; height: 100%; border-radius: 20px; transition: width 0.5s ease; }
+        .simulator-content { padding: 32px; }
+        .quote { background: rgba(212, 175, 55, 0.08); border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 16px; margin-bottom: 28px; }
+        .quote-text { font-style: italic; font-size: 0.95rem; }
+        .quote-author { margin-top: 8px; color: var(--gold); font-style: normal; font-weight: 500; font-size: 0.8rem; }
+        .scenario-card { background: var(--bg-light); border-radius: 24px; padding: 28px; margin-bottom: 32px; text-align: center; border: 1px solid var(--border); }
+        .scenario-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .scenario-number { color: var(--gold); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .scenario-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: var(--gold-light); }
+        .scenario-description { color: var(--text-secondary); line-height: 1.6; }
+        .slider-container { margin: 32px 0 24px; }
+        .slider-labels { display: flex; justify-content: space-between; margin-bottom: 16px; font-weight: 600; font-size: 0.85rem; }
+        .label-falta { color: var(--danger); display: flex; align-items: center; gap: 6px; }
+        .label-equilibrio { color: var(--gold); display: flex; align-items: center; gap: 6px; }
+        .label-excesso { color: var(--warning); display: flex; align-items: center; gap: 6px; }
+        input[type="range"] { width: 100%; height: 8px; -webkit-appearance: none; background: linear-gradient(to right, var(--danger), var(--gold), var(--warning)); border-radius: 10px; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; background: var(--gold); border-radius: 50%; cursor: pointer; box-shadow: 0 0 12px var(--gold); border: 2px solid #fff; transition: transform 0.1s; }
+        .slider-value { text-align: center; margin-top: 20px; }
+        .slider-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-dark); padding: 8px 20px; border-radius: 40px; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+        .slider-badge.falta { color: var(--danger); border-left: 3px solid var(--danger); }
+        .slider-badge.equilibrio { color: var(--gold); border-left: 3px solid var(--gold); }
+        .slider-badge.excesso { color: var(--warning); border-left: 3px solid var(--warning); }
+        .btn-confirmar { width: 100%; background: var(--gold); color: var(--bg-dark); border: none; padding: 16px; font-size: 1rem; font-weight: bold; border-radius: 60px; cursor: pointer; transition: all 0.2s; margin-bottom: 24px; }
+        .btn-confirmar:disabled { opacity: 0.6; cursor: not-allowed; }
+        .feedback-card { background: linear-gradient(135deg, var(--bg-dark), #0d1a30); border-radius: 20px; padding: 24px; margin-top: 24px; border: 1px solid var(--gold); animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .feedback-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .feedback-title { font-weight: 700; color: var(--gold); font-size: 1rem; }
+        .feedback-text { color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; }
+        .eudaimonia-meter { background: var(--bg-light); border-radius: 12px; padding: 12px 16px; margin-top: 12px; }
+        .nav-buttons { display: flex; gap: 16px; margin-top: 24px; }
+        .btn-nav { flex: 1; background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 40px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .btn-nav:hover { background: rgba(212, 175, 55, 0.1); }
+        .result-card { text-align: center; }
+        .eudaimometer-result { background: var(--bg-light); border-radius: 20px; padding: 28px; margin: 24px 0; }
+        .result-percent { font-size: 3.5rem; font-weight: bold; color: var(--gold); }
+        .result-stats { display: flex; justify-content: center; gap: 40px; margin: 20px 0; flex-wrap: wrap; }
+        .stat-number { font-size: 2rem; font-weight: bold; color: var(--gold); }
+        .result-message { margin: 20px 0; padding: 16px; background: rgba(46, 204, 113, 0.1); border-radius: 16px; color: var(--success); }
+        .result-detalhes { text-align: left; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+        .result-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+        .btn-reiniciar { width: 100%; background: var(--gold); color: var(--bg-dark); border: none; padding: 14px; font-size: 1rem; font-weight: bold; border-radius: 60px; cursor: pointer; margin-top: 16px; }
+        .footer { background: var(--bg-card); text-align: center; padding: 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.85rem; margin-top: 40px; }
+        @media (max-width: 650px) { .container { padding: 20px 16px; } .simulator-content { padding: 24px 20px; } .scenario-title { font-size: 1.2rem; } .nav-buttons { flex-direction: column; } }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="/index/" class="logo">⚖️ Ética Digital</a>
-            <div class="nav-links">
-                <a href="/index/">🏠 Início</a>
-                <a href="/conteudo/">📚 Conteúdo</a>
-                <a href="/simulador/" class="active">🎮 Simulador</a>
-                <a href="/forum/">💬 Atividades</a>
-            </div>
-            <div class="user-info">
-                <span id="userName">👤 Aluno</span>
-                <a href="/login/" style="color: var(--text-secondary); text-decoration: none;">🚪 Sair</a>
-            </div>
+            <a href="/index/" class="logo"><span>⚖️</span> Ética Digital</a>
+            <div class="nav-links"><a href="/index/">Início</a><a href="/conteudo/">Conteúdo</a><a href="/simulador/" class="active">Simulador</a><a href="/forum/">Atividades</a></div>
+            <div class="user-info"><span class="user-name" id="userName">👤 Aluno</span><a href="/login/" style="color: var(--text-secondary); text-decoration: none;">🚪 Sair</a></div>
         </div>
     </nav>
 
     <div class="container">
         <div class="simulator-card">
-            <div class="header">
-                <h1>⚖️ Simulador Interativo</h1>
-                <p>Justo Meio · Phronesis · Eudaimonia</p>
+            <div class="simulator-header"><h1>⚖️ Simulador Interativo</h1><p>Encontre o equilíbrio nas decisões digitais</p></div>
+            <div id="telaInicial" class="simulator-content">
+                <div class="quote"><div class="quote-text">“A virtude é um meio-termo entre dois vícios, um por excesso e outro por falta.”</div><div class="quote-author">— Aristóteles, Ética a Nicômaco</div></div>
+                <p style="text-align: center; margin-bottom: 24px; color: var(--text-secondary);">Este simulador apresenta <strong>6 dilemas reais</strong> do cotidiano digital.<br>Use o slider para escolher entre <strong style="color:var(--danger)">FALTA</strong>, <strong style="color:var(--gold)">JUSTO MEIO</strong> ou <strong style="color:var(--warning)">EXCESSO</strong>.</p>
+                <button class="btn-confirmar" id="iniciarBtn">🎯 Iniciar Simulação</button>
             </div>
-            <div class="content">
-                <div id="telaInicial">
-                    <div class="quote">
-                        <div class="quote-text">“A virtude é um meio-termo entre dois vícios, um por excesso e outro por falta.”</div>
-                        <div class="quote-author">— Aristóteles</div>
-                    </div>
-                    <button class="action-btn" onclick="iniciar()">🎯 Iniciar Desafio</button>
-                </div>
-                <div id="telaDilema" style="display: none;">
-                    <div class="scenario-text" id="titulo">📱 Jantar em família</div>
-                    <div class="scenario-description" id="descricao"></div>
-                    <div class="slider-container">
-                        <div class="slider-labels">
-                            <span class="lack-label">❌ FALTA</span>
-                            <span class="mean-label">✨ JUSTO MEIO</span>
-                            <span class="excess-label">⚠️ EXCESSO</span>
-                        </div>
-                        <input type="range" id="slider" min="0" max="100" value="50">
-                    </div>
-                    <button class="action-btn" onclick="confirmar()">📌 Confirmar decisão</button>
-                    <div id="feedback" style="display: none;">
-                        <div class="feedback-area">
-                            <div class="feedback-title">📜 Análise Aristotélica</div>
-                            <div id="feedbackTexto"></div>
-                        </div>
-                        <div class="eudaimonia" id="eudaimonia"></div>
-                        <div class="next-buttons">
-                            <button class="secondary-btn" onclick="proximo()">🔄 Próximo</button>
-                            <button class="secondary-btn" onclick="encerrar()">🏁 Encerrar</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="telaFim" style="display: none;">
-                    <div class="quote">
-                        <div class="quote-text">“A felicidade é uma atividade da alma conforme a virtude perfeita.”</div>
-                        <div class="quote-author">— Aristóteles</div>
-                    </div>
-                    <div id="resumo"></div>
-                    <button class="action-btn" onclick="reiniciar()">✨ Recomeçar</button>
+            <div id="telaSimulacao" style="display: none;">
+                <div class="progress-section"><div class="progress-stats"><span>Cenário <span id="cenarioAtual">1</span> de 6</span><span id="progressPercent">0% concluído</span></div><div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div></div>
+                <div class="simulator-content">
+                    <div class="scenario-card"><div class="scenario-icon" id="cenarioIcon">📱</div><div class="scenario-number">Dilema #<span id="cenarioNumero">1</span></div><div class="scenario-title" id="cenarioTitulo">Jantar em família</div><div class="scenario-description" id="cenarioDescricao"></div></div>
+                    <div class="slider-container"><div class="slider-labels"><span class="label-falta">❌ FALTA<br><span style="font-size:0.7rem;">(isolamento)</span></span><span class="label-equilibrio">✨ JUSTO MEIO<br><span style="font-size:0.7rem;">(equilíbrio)</span></span><span class="label-excesso">⚠️ EXCESSO<br><span style="font-size:0.7rem;">(hiperconectividade)</span></span></div><input type="range" id="slider" min="0" max="100" value="50"><div class="slider-value"><span class="slider-badge equilibrio" id="sliderLabel">⚖️ Equilíbrio</span></div></div>
+                    <button class="btn-confirmar" id="confirmarBtn">📌 Confirmar decisão</button>
+                    <div id="feedbackArea" style="display: none;"><div class="feedback-card"><div class="feedback-header"><span>📜</span><span class="feedback-title">Análise Aristotélica</span></div><div class="feedback-text" id="feedbackTexto"></div><div class="eudaimonia-meter"><div>🌟 EUDAIMONIA</div><div id="eudaimoniaValor"></div></div></div><div class="nav-buttons"><button class="btn-nav" id="proximoBtn">🔄 Próximo cenário</button><button class="btn-nav" id="encerrarBtn">🏁 Ver resultado final</button></div></div>
                 </div>
             </div>
+            <div id="telaResultado" style="display: none;"><div class="simulator-content result-card"><div class="quote"><div class="quote-text">“A felicidade é uma atividade da alma conforme a virtude perfeita.”</div><div class="quote-author">— Aristóteles</div></div><div class="eudaimometer-result"><div class="result-percent" id="resultPercent">0%</div><p>de decisões alinhadas com o <strong>Justo Meio</strong></p></div><div id="resultMessage" class="result-message"></div><div class="result-stats"><div class="stat-item"><div class="stat-number" id="statJustoMeio">0</div><p>Decisões<br>Equilibradas</p></div><div class="stat-item"><div class="stat-number" id="statFalta">0</div><p>Decisões<br>por Falta</p></div><div class="stat-item"><div class="stat-number" id="statExcesso">0</div><p>Decisões<br>por Excesso</p></div></div><div class="result-detalhes" id="resultDetalhes"></div><button class="btn-reiniciar" id="reiniciarBtn">✨ Recomeçar simulação</button><button class="btn-nav" id="voltarDashboardBtn" style="margin-top: 12px;">🏠 Voltar ao Dashboard</button></div></div>
         </div>
     </div>
 
+    <footer class="footer"><p>Universidade Federal do ABC | Licença Creative Commons BY-NC-SA | Luciano Rodrigues Pereira</p></footer>
+
     <script>
         const cenarios = [
-            { titulo: "📱 Jantar em família", descricao: "Você está em um jantar de família. Seu celular vibra com notificações...", falta: "Isolamento: Você ignora a família...", excesso: "Hiperconectividade: Você abandona a conversa...", meio: "Equilíbrio: Você finaliza a refeição e responde depois..." },
-            { titulo: "🌐 Redes sociais", descricao: "Você vê stories de amigos enquanto estuda...", falta: "Desativa todas as redes...", excesso: "Para de estudar e rola o feed...", meio: "Estuda e depois reserva um tempo para redes..." },
-            { titulo: "💼 Trabalho online", descricao: "Colegas não respondem no grupo...", falta: "Exclui os colegas sem conversar...", excesso: "Envia dezenas de mensagens...", meio: "Envia mensagem privada perguntando..." }
+            { icon:"📱", titulo:"Jantar em família", descricao:"Você está em um jantar de família. Seu celular vibra com notificações...", falta:"Isolamento: Você ignora completamente a família...", excesso:"Hiperconectividade: Você abandona a conversa...", justoMeio:"Equilíbrio: Você finaliza a refeição e responde depois..." },
+            { icon:"🌐", titulo:"Redes sociais e autoestima", descricao:"Você vê stories de amigos enquanto estuda...", falta:"Falta: Desativa todas as redes...", excesso:"Excesso: Para de estudar e rola o feed...", justoMeio:"Justo Meio: Estuda e depois reserva um tempo..." },
+            { icon:"💼", titulo:"Trabalho em equipe online", descricao:"Colegas não respondem no grupo...", falta:"Falta: Exclui os colegas sem conversar...", excesso:"Excesso: Envia dezenas de mensagens...", justoMeio:"Justo Meio: Envia mensagem privada perguntando..." },
+            { icon:"🌙", titulo:"Uso do celular antes de dormir", descricao:"São 23h30, você está na cama...", falta:"Falta: Desliga abruptamente...", excesso:"Excesso: Continua até tarde...", justoMeio:"Justo Meio: Ativa modo não perturbe e coloca longe" },
+            { icon:"💬", titulo:"Comentários negativos online", descricao:"Você recebeu comentários agressivos...", falta:"Falta: Apaga tudo e nunca mais posta...", excesso:"Excesso: Responde com agressividade...", justoMeio:"Justo Meio: Responde educadamente e ignora agressivos" },
+            { icon:"🎮", titulo:"Tempo de tela e hobbies", descricao:"Você adora jogar videogame...", falta:"Falta: Para completamente de jogar...", excesso:"Excesso: Joga 8 horas por dia...", justoMeio:"Justo Meio: Define limite de 2 horas por dia" }
         ];
-
-        let index = 0;
-        let respostas = [];
-
-        function iniciar() {
-            document.getElementById('telaInicial').style.display = 'none';
-            document.getElementById('telaDilema').style.display = 'block';
-            carregarCenario();
-        }
-
-        function carregarCenario() {
-            const c = cenarios[index];
-            document.getElementById('titulo').innerHTML = c.titulo;
-            document.getElementById('descricao').innerHTML = c.descricao;
-            document.getElementById('slider').value = 50;
-            document.getElementById('feedback').style.display = 'none';
-        }
-
-        function confirmar() {
-            const valor = parseInt(document.getElementById('slider').value);
-            let decisao = '';
-            let texto = '';
-            let eudaimonia = '';
-
-            if (valor <= 33) { decisao = 'Falta'; texto = cenarios[index].falta; eudaimonia = '🍂 Eudaimonia em risco'; }
-            else if (valor >= 67) { decisao = 'Excesso'; texto = cenarios[index].excesso; eudaimonia = '⚠️ Eudaimonia comprometida'; }
-            else { decisao = 'Justo Meio'; texto = cenarios[index].meio; eudaimonia = '🌿 Eudaimonia elevada!'; }
-
-            respostas.push({ cenario: cenarios[index].titulo, decisao: decisao });
-            document.getElementById('feedbackTexto').innerHTML = texto;
-            document.getElementById('eudaimonia').innerHTML = `🌟 Eudaimonia:<br><span>${eudaimonia}</span>`;
-            document.getElementById('feedback').style.display = 'block';
-        }
-
-        function proximo() {
-            if (index + 1 < cenarios.length) { index++; carregarCenario(); }
-            else { encerrar(); }
-        }
-
-        function encerrar() {
-            document.getElementById('telaDilema').style.display = 'none';
-            document.getElementById('telaFim').style.display = 'block';
-            let justos = respostas.filter(r => r.decisao === 'Justo Meio').length;
-            document.getElementById('resumo').innerHTML = `<p>Você fez ${respostas.length} cenários.</p><p><strong>Decisões equilibradas: ${justos} de ${respostas.length}</strong></p>`;
-        }
-
-        function reiniciar() {
-            index = 0;
-            respostas = [];
-            document.getElementById('telaFim').style.display = 'none';
-            document.getElementById('telaInicial').style.display = 'block';
-        }
-
-        const usuarioNome = localStorage.getItem('usuario_nome') || 'Estudante';
-        document.getElementById('userName').innerHTML = `👤 ${usuarioNome}`;
-
-        if (!localStorage.getItem('usuario_logado')) {
-            window.location.href = '/login/';
-        }
+        let currentIndex = 0, respostas = [], slider = null, confirmado = false;
+        const telaInicial = document.getElementById('telaInicial'), telaSimulacao = document.getElementById('telaSimulacao'), telaResultado = document.getElementById('telaResultado');
+        function atualizarSliderLabel() { let v = parseInt(slider.value), l = document.getElementById('sliderLabel'); if(v<=33){ l.innerHTML='❌ Falta'; l.className='slider-badge falta'; } else if(v>=67){ l.innerHTML='⚠️ Excesso'; l.className='slider-badge excesso'; } else { l.innerHTML='✨ Justo Meio'; l.className='slider-badge equilibrio'; } }
+        function carregarCenario() { let c = cenarios[currentIndex]; document.getElementById('cenarioIcon').innerHTML=c.icon; document.getElementById('cenarioNumero').innerHTML=currentIndex+1; document.getElementById('cenarioTitulo').innerHTML=c.titulo; document.getElementById('cenarioDescricao').innerHTML=c.descricao; document.getElementById('cenarioAtual').innerHTML=currentIndex+1; slider.value=50; atualizarSliderLabel(); document.getElementById('feedbackArea').style.display='none'; confirmado=false; document.getElementById('confirmarBtn').disabled=false; document.getElementById('confirmarBtn').innerHTML='📌 Confirmar decisão'; atualizarProgresso(); }
+        function atualizarProgresso() { let p = Math.round((respostas.length/cenarios.length)*100); document.getElementById('progressPercent').innerHTML=`${p}% concluído`; document.getElementById('progressFill').style.width=`${p}%`; }
+        function confirmarDecisao() { if(confirmado){ alert('Você já confirmou esta decisão!'); return; } let v=parseInt(slider.value), tipo; if(v<=33) tipo='falta'; else if(v>=67) tipo='excesso'; else tipo='justoMeio'; let c=cenarios[currentIndex], fb='', eu=''; if(tipo==='falta'){ fb=c.falta; eu='🍂 Eudaimonia em risco.'; } else if(tipo==='excesso'){ fb=c.excesso; eu='⚠️ Eudaimonia comprometida.'; } else { fb=c.justoMeio; eu='🌿 Eudaimonia elevada!'; } respostas.push({ cenario:c.titulo, icon:c.icon, decisao:tipo, justoMeio:tipo==='justoMeio' }); document.getElementById('feedbackTexto').innerHTML=fb; document.getElementById('eudaimoniaValor').innerHTML=eu; document.getElementById('feedbackArea').style.display='block'; confirmado=true; document.getElementById('confirmarBtn').disabled=true; document.getElementById('confirmarBtn').innerHTML='✅ Decisão registrada'; let h=JSON.parse(localStorage.getItem('simulacoes_realizadas')||'[]'); h.push({ data:new Date().toISOString(), cenario:c.titulo, decisao:tipo }); localStorage.setItem('simulacoes_realizadas',JSON.stringify(h)); atualizarProgresso(); }
+        function proximoCenario() { if(!confirmado){ alert('Confirme sua decisão primeiro!'); return; } if(currentIndex+1<cenarios.length){ currentIndex++; carregarCenario(); } else { encerrarSimulacao(); } }
+        function encerrarSimulacao() { let totalJustoMeio=respostas.filter(r=>r.justoMeio).length, totalFalta=respostas.filter(r=>r.decisao==='falta').length, totalExcesso=respostas.filter(r=>r.decisao==='excesso').length, p=Math.round((totalJustoMeio/cenarios.length)*100); let msg=''; if(p===100) msg='🏆 Excelente! Você encontrou o Justo Meio em todas as situações!'; else if(p>=60) msg='🌟 Bom trabalho! Você acertou o equilíbrio na maioria das situações.'; else msg='📚 Continue praticando! Revise o módulo teórico.'; document.getElementById('resultPercent').innerHTML=`${p}%`; document.getElementById('resultMessage').innerHTML=msg; document.getElementById('statJustoMeio').innerHTML=totalJustoMeio; document.getElementById('statFalta').innerHTML=totalFalta; document.getElementById('statExcesso').innerHTML=totalExcesso; let d='<strong>📊 Seu desempenho:</strong><br>'; respostas.forEach((r,i)=>{ let icone=r.justoMeio?'✅':(r.decisao==='falta'?'❌':'⚠️'); let cor=r.justoMeio?'#2ecc71':(r.decisao==='falta'?'#e74c3c':'#f39c12'); d+=`<div class="result-item"><span style="color:${cor}">${icone}</span> <strong>${i+1}. ${r.icon} ${r.cenario}</strong></div>`; }); document.getElementById('resultDetalhes').innerHTML=d; telaSimulacao.style.display='none'; telaResultado.style.display='block'; }
+        function reiniciarSimulacao() { currentIndex=0; respostas=[]; confirmado=false; telaResultado.style.display='none'; telaInicial.style.display='block'; }
+        function iniciarSimulacao() { currentIndex=0; respostas=[]; confirmado=false; telaInicial.style.display='none'; telaSimulacao.style.display='block'; carregarCenario(); }
+        document.addEventListener('DOMContentLoaded',()=>{ slider=document.getElementById('slider'); slider.addEventListener('input',atualizarSliderLabel); document.getElementById('iniciarBtn').addEventListener('click',iniciarSimulacao); document.getElementById('confirmarBtn').addEventListener('click',confirmarDecisao); document.getElementById('proximoBtn').addEventListener('click',proximoCenario); document.getElementById('encerrarBtn').addEventListener('click',encerrarSimulacao); document.getElementById('reiniciarBtn').addEventListener('click',reiniciarSimulacao); document.getElementById('voltarDashboardBtn').addEventListener('click',()=>{ window.location.href='/index/'; }); });
+        let nome=localStorage.getItem('usuario_nome')||'Estudante'; document.getElementById('userName').innerHTML=`👤 ${nome}`; if(!localStorage.getItem('usuario_logado')) window.location.href='/login/';
     </script>
 </body>
 </html>
