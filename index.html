@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador | Ética Aristotélica no Cotidiano Digital</title>
     <style>
         * {
@@ -20,9 +20,8 @@
             --text-primary: #ffffff;
             --text-secondary: #9aa7b9;
             --border: #1e2a44;
-            --success: #2ecc71;
-            --warning: #f39c12;
             --danger: #e74c3c;
+            --warning: #f39c12;
         }
 
         body {
@@ -35,15 +34,12 @@
         .navbar {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 16px 24px;
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -82,20 +78,10 @@
             gap: 16px;
         }
 
-        .progress-badge {
-            background: var(--gold-dark);
-            color: var(--bg-dark);
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
         .container {
             max-width: 700px;
             margin: 0 auto;
             padding: 32px 24px;
-            min-height: calc(100vh - 160px);
         }
 
         .simulator-card {
@@ -107,28 +93,21 @@
 
         .header {
             background: #0b1222;
-            padding: 24px 28px;
+            padding: 24px;
             border-bottom: 2px solid var(--gold);
             text-align: center;
         }
 
         .header h1 {
             color: var(--gold);
-            font-size: 1.6rem;
-        }
-
-        .scenario-counter {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 8px;
         }
 
         .content {
-            padding: 32px 28px;
+            padding: 32px;
         }
 
         .quote {
-            background: rgba(212, 175, 55, 0.08);
+            background: rgba(212,175,55,0.08);
             border-left: 4px solid var(--gold);
             padding: 16px 20px;
             border-radius: 20px;
@@ -139,18 +118,16 @@
         .scenario-text {
             font-size: 1.35rem;
             font-weight: 500;
-            color: #ffffff;
             margin-bottom: 12px;
         }
 
         .scenario-description {
-            color: #b9c3d4;
+            color: var(--text-secondary);
             margin-bottom: 32px;
-            line-height: 1.6;
         }
 
         .slider-container {
-            margin: 35px 0 25px;
+            margin: 35px 0;
         }
 
         .slider-labels {
@@ -170,7 +147,6 @@
             -webkit-appearance: none;
             background: linear-gradient(to right, var(--danger), var(--gold), var(--warning));
             border-radius: 10px;
-            outline: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
@@ -180,38 +156,24 @@
             background: var(--gold);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 8px var(--gold);
             border: 2px solid #fff;
-        }
-
-        .slider-value-indicator {
-            text-align: center;
-            margin-top: 12px;
-            background: #0b1222;
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 40px;
-            color: var(--gold);
-            font-weight: 500;
         }
 
         .action-btn {
             background: var(--gold);
-            border: none;
             width: 100%;
             padding: 16px;
             font-size: 1.1rem;
             font-weight: bold;
             color: #0a1628;
+            border: none;
             border-radius: 60px;
             cursor: pointer;
-            transition: 0.2s;
             margin-top: 20px;
         }
 
         .action-btn:hover {
             background: #e6c453;
-            transform: scale(0.98);
         }
 
         .feedback-area {
@@ -222,23 +184,12 @@
             border-left: 4px solid var(--gold);
         }
 
-        .feedback-title {
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
         .eudaimonia {
             margin-top: 20px;
-            background: rgba(212, 175, 55, 0.12);
+            background: rgba(212,175,55,0.12);
             border-radius: 40px;
-            padding: 12px 18px;
+            padding: 12px;
             text-align: center;
-        }
-
-        .eudaimonia span {
-            color: var(--gold);
-            font-size: 1.1rem;
         }
 
         .next-buttons {
@@ -254,63 +205,7 @@
             padding: 12px;
             border-radius: 60px;
             cursor: pointer;
-            font-weight: 600;
             flex: 1;
-            transition: 0.2s;
-        }
-
-        .secondary-btn:hover {
-            background: #d4af371a;
-        }
-
-        .accessibility-bar {
-            display: flex;
-            justify-content: flex-end;
-            padding: 10px 28px;
-            gap: 12px;
-            background: #0b1222;
-        }
-
-        .access-btn {
-            background: none;
-            border: 1px solid #556b8a;
-            color: #ccd6f0;
-            padding: 4px 12px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            transition: 0.2s;
-        }
-
-        .access-btn:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        .progress-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 24px;
-            margin-bottom: 8px;
-        }
-
-        .progress-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--border);
-            transition: all 0.3s;
-        }
-
-        .progress-dot.completed {
-            background: var(--gold);
-        }
-
-        .progress-dot.current {
-            background: var(--gold);
-            transform: scale(1.3);
-            box-shadow: 0 0 8px var(--gold);
         }
 
         .footer {
@@ -318,429 +213,146 @@
             text-align: center;
             padding: 18px;
             border-top: 1px solid var(--border);
-            color: var(--text-secondary);
             font-size: 0.7rem;
         }
 
-        .resumo-card {
-            background: #0b1222;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid var(--border);
-        }
-
-        .resumo-card h4 {
-            color: var(--gold);
-            margin-bottom: 12px;
-        }
-
-        .btn-voltar {
-            background: var(--success);
-            color: var(--bg-dark);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 16px;
-            width: 100%;
-        }
-
         @media (max-width: 550px) {
-            .content { padding: 24px 18px; }
-            .scenario-text { font-size: 1.2rem; }
-            .next-buttons { flex-direction: column; }
-        }
-
-        .high-contrast {
-            filter: contrast(1.2) brightness(1.05);
-        }
-        .high-contrast body {
-            background: #000 !important;
+            .content { padding: 24px; }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="https://lrpluciano-pereira.github.io/index.html" class="logo">
-                <span>⚖️ Ética Digital</span>
-            </a>
+            <a href="/index/" class="logo">⚖️ Ética Digital</a>
             <div class="nav-links">
-                <a href="https://lrpluciano-pereira.github.io/index.html">🏠 Início</a>
-                <a href="https://lrpluciano-pereira.github.io/conteudo.html">📚 Conteúdo</a>
-                <a href="https://lrpluciano-pereira.github.io/simulador.html" class="active">🎮 Simulador</a>
-                <a href="https://lrpluciano-pereira.github.io/forum.html">💬 Atividades</a>
+                <a href="/index/">🏠 Início</a>
+                <a href="/conteudo/">📚 Conteúdo</a>
+                <a href="/simulador/" class="active">🎮 Simulador</a>
+                <a href="/forum/">💬 Atividades</a>
             </div>
             <div class="user-info">
-                <span class="progress-badge" id="progressBadge">0%</span>
                 <span id="userName">👤 Aluno</span>
+                <a href="/login/" style="color: var(--text-secondary); text-decoration: none;">🚪 Sair</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
         <div class="simulator-card">
-            <div class="accessibility-bar">
-                <button class="access-btn" id="highContrastBtn">🌓 Alto Contraste</button>
-                <button class="access-btn" id="resetBtn">⟳ Reiniciar Simulação</button>
-            </div>
             <div class="header">
                 <h1>⚖️ Simulador Interativo</h1>
                 <p>Justo Meio · Phronesis · Eudaimonia</p>
             </div>
-
-            <div class="content" id="dynamicContent">
-                <!-- TELA INICIAL -->
-                <div id="tela1">
+            <div class="content">
+                <div id="telaInicial">
                     <div class="quote">
                         <div class="quote-text">“A virtude é um meio-termo entre dois vícios, um por excesso e outro por falta.”</div>
-                        <div class="quote-author" style="margin-top:10px; color:var(--gold);">— Aristóteles, Ética a Nicômaco</div>
+                        <div class="quote-author">— Aristóteles</div>
                     </div>
-                    <p style="color:#ccd6f0; margin-bottom: 20px;">No cotidiano digital, somos desafiados a encontrar equilíbrio. Este simulador apresenta <strong>6 dilemas reais</strong> para você praticar o <strong>Justo Meio</strong>.</p>
-                    <p style="color:#9aa7b9; font-size:0.9rem; margin-bottom: 20px;">📌 Como funciona: Use o slider para escolher entre <strong style="color:var(--danger)">FALTA</strong> (isolamento/omissão), <strong style="color:var(--gold)">JUSTO MEIO</strong> (equilíbrio) ou <strong style="color:var(--warning)">EXCESSO</strong> (hiperconectividade/exagero).</p>
-                    <button class="action-btn" id="iniciarDesafioBtn">🎯 Iniciar Desafio</button>
+                    <button class="action-btn" onclick="iniciar()">🎯 Iniciar Desafio</button>
                 </div>
-
-                <!-- TELA DOS DILEMAS -->
                 <div id="telaDilema" style="display: none;">
-                    <div class="scenario-counter" id="scenarioCounter">Cenário 1 / 6</div>
-                    <div class="scenario-text" id="dilemaTitulo">📱 Jantar em família</div>
-                    <div class="scenario-description" id="dilemaDescricao"></div>
-                    
+                    <div class="scenario-text" id="titulo">📱 Jantar em família</div>
+                    <div class="scenario-description" id="descricao"></div>
                     <div class="slider-container">
                         <div class="slider-labels">
                             <span class="lack-label">❌ FALTA</span>
                             <span class="mean-label">✨ JUSTO MEIO</span>
                             <span class="excess-label">⚠️ EXCESSO</span>
                         </div>
-                        <input type="range" id="decisaoSlider" min="0" max="100" value="50">
-                        <div style="text-align: center; margin-top: 10px;">
-                            <span class="slider-value-indicator" id="sliderValueDisplay">⚖️ Equilíbrio</span>
-                        </div>
+                        <input type="range" id="slider" min="0" max="100" value="50">
                     </div>
-
-                    <button class="action-btn" id="confirmarDecisaoBtn">📌 Confirmar decisão</button>
-
-                    <div id="feedbackContainer" style="display: none;">
+                    <button class="action-btn" onclick="confirmar()">📌 Confirmar decisão</button>
+                    <div id="feedback" style="display: none;">
                         <div class="feedback-area">
                             <div class="feedback-title">📜 Análise Aristotélica</div>
-                            <div class="feedback-message" id="feedbackTexto"></div>
+                            <div id="feedbackTexto"></div>
                         </div>
-                        <div class="eudaimonia">
-                            🌟 <strong>Eudaimonia (Florescimento)</strong><br>
-                            <span id="eudaimoniaValor">🔹 Em análise</span>
-                        </div>
+                        <div class="eudaimonia" id="eudaimonia"></div>
                         <div class="next-buttons">
-                            <button class="secondary-btn" id="novoCenarioBtn">🔄 Próximo cenário</button>
-                            <button class="secondary-btn" id="encerrarBtn">🏁 Encerrar e ver resultado</button>
+                            <button class="secondary-btn" onclick="proximo()">🔄 Próximo</button>
+                            <button class="secondary-btn" onclick="encerrar()">🏁 Encerrar</button>
                         </div>
                     </div>
-                    
-                    <div class="progress-indicator" id="progressIndicator"></div>
                 </div>
-
-                <!-- TELA DE ENCERRAMENTO / RESULTADO -->
-                <div id="telaEncerramento" style="display: none;">
+                <div id="telaFim" style="display: none;">
                     <div class="quote">
                         <div class="quote-text">“A felicidade é uma atividade da alma conforme a virtude perfeita.”</div>
-                        <div class="quote-author" style="margin-top:10px; color:var(--gold);">— Aristóteles</div>
+                        <div class="quote-author">— Aristóteles</div>
                     </div>
-                    <div id="encerramentoMsg"></div>
-                    <div id="resumoFinal" class="resumo-card"></div>
-                    <button class="action-btn" id="recarregarBtn">✨ Recomeçar simulação</button>
-                    <button class="btn-voltar" id="voltarInicioBtn">🏠 Voltar ao Dashboard</button>
+                    <div id="resumo"></div>
+                    <button class="action-btn" onclick="reiniciar()">✨ Recomeçar</button>
                 </div>
-            </div>
-            <div class="footer">
-                <p>Licença Creative Commons BY-NC-SA | Luciano Rodrigues Pereira</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Carregar nome do usuário
-        const usuarioNome = localStorage.getItem('usuario_nome') || 'Aluno';
-        document.getElementById('userName').innerHTML = `👤 ${usuarioNome}`;
-
-        // Verificar login
-        if (!localStorage.getItem('usuario_logado')) {
-            window.location.href = 'https://lrpluciano-pereira.github.io/login.html';
-        }
-
-        // 6 CENÁRIOS EXPANDIDOS
         const cenarios = [
-            {
-                id: 1,
-                titulo: "📱 Jantar em família",
-                descricao: "Você está em um jantar de família. Seu celular vibra com notificações de um grupo de amigos comentando algo engraçado. Qual sua atitude?",
-                faltaFeedback: "📵 Isolamento: Você ignora completamente a família e o celular, mas ao custo de se distanciar dos afetos. Aristóteles diria que a sociabilidade é parte da natureza humana; a falta de interação priva a virtude da amizade.",
-                excessoFeedback: "📳 Hiperconectividade: Você abandona a conversa familiar para responder todas as mensagens. O excesso de prazer digital afasta a presença, vício por excesso.",
-                justoMeioFeedback: "✅ Equilíbrio: Você percebe as notificações, mas decide finalizar a refeição com atenção à família e responde os amigos depois. Aplicou a phronesis (sabedoria prática). Justo Meio!"
-            },
-            {
-                id: 2,
-                titulo: "🌐 Redes sociais e autoestima",
-                descricao: "Você vê stories de amigos em festas enquanto está estudando para uma prova importante. Começa a sentir ansiedade e FOMO (medo de estar perdendo algo). O que fazer?",
-                faltaFeedback: "🚫 Falta: Você desativa todas as redes e ignora qualquer interação social por dias. Isolamento excessivo pode gerar melancolia, fugindo do equilíbrio entre lazer e dever.",
-                excessoFeedback: "🌀 Excesso: Você para de estudar, passa horas rolando o feed e se comparando. Ansiedade aumenta. O vício nas redes enfraquece a virtude da moderação.",
-                justoMeioFeedback: "⚖️ Justo Meio: Você reconhece o sentimento, respira, estuda por mais 40 minutos e depois reserva um tempo para redes sociais. Controle racional dos desejos. Excelência!"
-            },
-            {
-                id: 3,
-                titulo: "💼 Trabalho em equipe online",
-                descricao: "Seu grupo de trabalho tem um prazo apertado. Alguns colegas não estão respondendo no grupo do WhatsApp. Você fica frustrado e pensa em excluí-los do grupo. O que faz?",
-                faltaFeedback: "😤 Falta: Você exclui os colegas sem conversar. Perde a oportunidade de diálogo e prejudica o trabalho em equipe. A falta de paciência compromete a virtude da justiça.",
-                excessoFeedback: "📨 Excesso: Você envia dezenas de mensagens, liga para todos várias vezes e cobra publicamente. Gera constrangimento e estresse. Excesso de cobrança é vício.",
-                justoMeioFeedback: "🤝 Justo Meio: Você envia uma mensagem privada perguntando se há algum problema e oferece ajuda. Demonstra phronesis ao equilibrar prazo e relações humanas."
-            },
-            {
-                id: 4,
-                titulo: "📱 Uso do celular antes de dormir",
-                descricao: "São 23h30, você está na cama e pega o celular para 'só mais 5 minutos'. Já faz uma hora que está rolando o feed. Amanhã tem aula cedo. O que fazer?",
-                faltaFeedback: "😴 Falta: Você desliga o celular e guarda em outra sala, mas fica ansioso pensando no que perdeu. A falta de um desligamento gradual pode gerar ansiedade.",
-                excessoFeedback: "📱 Excesso: Você continua até 2h da manhã. No dia seguinte, está exausto e não rende nas aulas. O excesso de telas prejudica a temperança e a saúde.",
-                justoMeioFeedback: "🌙 Justo Meio: Você ativa o modo 'não perturbe', coloca o celular longe da cama e decide que amanhã verá as novidades. Equilíbrio entre lazer digital e descanso."
-            },
-            {
-                id: 5,
-                titulo: "💬 Comentários negativos online",
-                descricao: "Você postou uma opinião e recebeu vários comentários agressivos. Alguns são ofensivos. Como você reage?",
-                faltaFeedback: "🤐 Falta: Você apaga tudo e nunca mais posta nada. O isolamento digital por medo de críticas impede o desenvolvimento da coragem intelectual.",
-                excessoFeedback: "🔥 Excesso: Você responde cada comentário com agressividade, alimentando uma discussão pública. A ira descontrolada é vício por excesso.",
-                justoMeioFeedback: "🕊️ Justo Meio: Você responde educadamente aos comentários que trazem argumentos e ignora os agressivos. Se necessário, bloqueia. Aplica a virtude da paciência e da justiça."
-            },
-            {
-                id: 6,
-                titulo: "🎮 Tempo de tela e hobbies",
-                descricao: "Você adora jogar videogame, mas percebe que está deixando de fazer exercícios físicos e encontrar amigos pessoalmente. Como equilibrar?",
-                faltaFeedback: "🎲 Falta: Você para completamente de jogar, mas fica entediado e sente falta. A abstinência total pode ser tão prejudicial quanto o excesso.",
-                excessoFeedback: "🕹️ Excesso: Você joga 8 horas por dia, negligencia estudos, saúde e relacionamentos. O vício em jogos é um desequilíbrio claro.",
-                justoMeioFeedback: "⚖️ Justo Meio: Você define um limite de 2 horas por dia para jogos, intercala com atividades físicas e mantém encontros sociais. Encontrou seu ponto de equilíbrio!"
-            }
+            { titulo: "📱 Jantar em família", descricao: "Você está em um jantar de família. Seu celular vibra com notificações...", falta: "Isolamento: Você ignora a família...", excesso: "Hiperconectividade: Você abandona a conversa...", meio: "Equilíbrio: Você finaliza a refeição e responde depois..." },
+            { titulo: "🌐 Redes sociais", descricao: "Você vê stories de amigos enquanto estuda...", falta: "Desativa todas as redes...", excesso: "Para de estudar e rola o feed...", meio: "Estuda e depois reserva um tempo para redes..." },
+            { titulo: "💼 Trabalho online", descricao: "Colegas não respondem no grupo...", falta: "Exclui os colegas sem conversar...", excesso: "Envia dezenas de mensagens...", meio: "Envia mensagem privada perguntando..." }
         ];
 
-        let currentCenarioIndex = 0;
-        let sliderElement = null;
-        let historicoEscolhas = [];
+        let index = 0;
+        let respostas = [];
 
-        const tela1Div = document.getElementById('tela1');
-        const telaDilemaDiv = document.getElementById('telaDilema');
-        const telaEncerramentoDiv = document.getElementById('telaEncerramento');
-        const dilemaTitulo = document.getElementById('dilemaTitulo');
-        const dilemaDescricao = document.getElementById('dilemaDescricao');
-        const feedbackTexto = document.getElementById('feedbackTexto');
-        const eudaimoniaSpan = document.getElementById('eudaimoniaValor');
-        const scenarioCounter = document.getElementById('scenarioCounter');
-
-        function interpretarDecisao(valor) {
-            if (valor <= 33) return 'falta';
-            if (valor >= 67) return 'excesso';
-            return 'justoMeio';
+        function iniciar() {
+            document.getElementById('telaInicial').style.display = 'none';
+            document.getElementById('telaDilema').style.display = 'block';
+            carregarCenario();
         }
 
-        function updateSliderLabel(valor) {
-            const sliderValueDisplay = document.getElementById('sliderValueDisplay');
-            if (!sliderValueDisplay) return;
-            const tipo = interpretarDecisao(valor);
-            if (tipo === 'falta') sliderValueDisplay.innerHTML = '❌ Falta (isolamento/omissão)';
-            else if (tipo === 'excesso') sliderValueDisplay.innerHTML = '⚠️ Excesso (hiperconectividade/exagero)';
-            else sliderValueDisplay.innerHTML = '✨ Justo Meio (equilíbrio)';
+        function carregarCenario() {
+            const c = cenarios[index];
+            document.getElementById('titulo').innerHTML = c.titulo;
+            document.getElementById('descricao').innerHTML = c.descricao;
+            document.getElementById('slider').value = 50;
+            document.getElementById('feedback').style.display = 'none';
         }
 
-        function gerarFeedback(tipoDecisao, cenario) {
-            if (tipoDecisao === 'falta') return cenario.faltaFeedback;
-            if (tipoDecisao === 'excesso') return cenario.excessoFeedback;
-            return cenario.justoMeioFeedback;
+        function confirmar() {
+            const valor = parseInt(document.getElementById('slider').value);
+            let decisao = '';
+            let texto = '';
+            let eudaimonia = '';
+
+            if (valor <= 33) { decisao = 'Falta'; texto = cenarios[index].falta; eudaimonia = '🍂 Eudaimonia em risco'; }
+            else if (valor >= 67) { decisao = 'Excesso'; texto = cenarios[index].excesso; eudaimonia = '⚠️ Eudaimonia comprometida'; }
+            else { decisao = 'Justo Meio'; texto = cenarios[index].meio; eudaimonia = '🌿 Eudaimonia elevada!'; }
+
+            respostas.push({ cenario: cenarios[index].titulo, decisao: decisao });
+            document.getElementById('feedbackTexto').innerHTML = texto;
+            document.getElementById('eudaimonia').innerHTML = `🌟 Eudaimonia:<br><span>${eudaimonia}</span>`;
+            document.getElementById('feedback').style.display = 'block';
         }
 
-        function calcularEudaimonia(tipoDecisao) {
-            if (tipoDecisao === 'justoMeio') {
-                return "🌿 Eudaimonia elevada! Esta escolha tende ao florescimento humano, agindo conforme a razão prática.";
-            }
-            if (tipoDecisao === 'falta') {
-                return "🍂 Eudaimonia em risco. A falta de engajamento pode afastar a vida plena em comunidade.";
-            }
-            return "⚠️ Eudaimonia comprometida. O excesso digital obscurece a temperança e a atenção ao necessário.";
+        function proximo() {
+            if (index + 1 < cenarios.length) { index++; carregarCenario(); }
+            else { encerrar(); }
         }
 
-        function salvarResultadoSimulacao(cenario, decisao, feedback) {
-            let historico = JSON.parse(localStorage.getItem('simulacoes_realizadas') || '[]');
-            historico.push({
-                data: new Date().toISOString(),
-                cenario: cenario.titulo,
-                decisao: decisao,
-                feedback_resumido: feedback.substring(0, 100)
-            });
-            localStorage.setItem('simulacoes_realizadas', JSON.stringify(historico));
+        function encerrar() {
+            document.getElementById('telaDilema').style.display = 'none';
+            document.getElementById('telaFim').style.display = 'block';
+            let justos = respostas.filter(r => r.decisao === 'Justo Meio').length;
+            document.getElementById('resumo').innerHTML = `<p>Você fez ${respostas.length} cenários.</p><p><strong>Decisões equilibradas: ${justos} de ${respostas.length}</strong></p>`;
         }
 
-        function atualizarProgressoIndicador() {
-            const container = document.getElementById('progressIndicator');
-            if (!container) return;
-            
-            let html = '';
-            for (let i = 0; i < cenarios.length; i++) {
-                let classe = '';
-                if (i < currentCenarioIndex) classe = 'completed';
-                if (i === currentCenarioIndex) classe = 'current';
-                html += `<div class="progress-dot ${classe}"></div>`;
-            }
-            container.innerHTML = html;
+        function reiniciar() {
+            index = 0;
+            respostas = [];
+            document.getElementById('telaFim').style.display = 'none';
+            document.getElementById('telaInicial').style.display = 'block';
         }
 
-        function carregarCenario(index) {
-            const cenario = cenarios[index];
-            dilemaTitulo.innerText = cenario.titulo;
-            dilemaDescricao.innerText = cenario.descricao;
-            scenarioCounter.innerText = `Cenário ${index + 1} / ${cenarios.length}`;
-            
-            if (sliderElement) {
-                sliderElement.value = 50;
-                updateSliderLabel(50);
-            }
-            
-            const feedbackContainer = document.getElementById('feedbackContainer');
-            if (feedbackContainer) feedbackContainer.style.display = 'none';
-            
-            atualizarProgressoIndicador();
+        const usuarioNome = localStorage.getItem('usuario_nome') || 'Estudante';
+        document.getElementById('userName').innerHTML = `👤 ${usuarioNome}`;
+
+        if (!localStorage.getItem('usuario_logado')) {
+            window.location.href = '/login/';
         }
-
-        function mostrarFeedback(tipo, cenario) {
-            const msg = gerarFeedback(tipo, cenario);
-            feedbackTexto.innerText = msg;
-            eudaimoniaSpan.innerText = calcularEudaimonia(tipo);
-            const feedbackContainer = document.getElementById('feedbackContainer');
-            if (feedbackContainer) feedbackContainer.style.display = 'block';
-            salvarResultadoSimulacao(cenario, tipo, msg);
-            
-            historicoEscolhas.push({
-                cenario: cenario.titulo,
-                decisao: tipo,
-                justoMeio: tipo === 'justoMeio'
-            });
-        }
-
-        function onConfirmarDecisao() {
-            const valor = parseInt(sliderElement.value, 10);
-            const tipo = interpretarDecisao(valor);
-            const cenarioAtual = cenarios[currentCenarioIndex];
-            mostrarFeedback(tipo, cenarioAtual);
-        }
-
-        function novoCenario() {
-            if (currentCenarioIndex + 1 < cenarios.length) {
-                currentCenarioIndex++;
-                carregarCenario(currentCenarioIndex);
-            } else {
-                encerrarAtividade();
-            }
-        }
-
-        function encerrarAtividade() {
-            telaDilemaDiv.style.display = 'none';
-            telaEncerramentoDiv.style.display = 'block';
-            tela1Div.style.display = 'none';
-            
-            const totalJustoMeio = historicoEscolhas.filter(h => h.justoMeio).length;
-            const totalCenarios = historicoEscolhas.length;
-            
-            let mensagemResumo = '';
-            let conselhoFinal = '';
-            let emoji = '';
-            
-            if (totalJustoMeio === totalCenarios) {
-                emoji = '🏆';
-                mensagemResumo = 'Excelente! Você encontrou o Justo Meio em todas as situações!';
-                conselhoFinal = 'Você demonstrou phronesis (sabedoria prática) em cada decisão. Continue assim!';
-            } else if (totalJustoMeio >= totalCenarios / 2) {
-                emoji = '🌟';
-                mensagemResumo = 'Bom trabalho! Você acertou o equilíbrio na maioria das situações.';
-                conselhoFinal = 'Continue refletindo sobre suas escolhas digitais. O caminho da virtude é uma prática diária.';
-            } else {
-                emoji = '📚';
-                mensagemResumo = 'Continue praticando! A virtude é um hábito que se desenvolve com o tempo.';
-                conselhoFinal = 'Revise o módulo teórico e tente novamente. Cada escolha é uma oportunidade de aprendizado.';
-            }
-            
-            document.getElementById('encerramentoMsg').innerHTML = `
-                <p style="font-size:1.2rem; text-align:center;">${emoji} <strong>Simulação concluída!</strong></p>
-                <p style="text-align:center;">Você analisou <strong>${totalCenarios}</strong> situações do cotidiano digital.<br>
-                <strong style="color:var(--gold)">Decisões equilibradas (Justo Meio): ${totalJustoMeio} de ${totalCenarios}</strong></p>
-            `;
-            
-            let resumoHtml = `<h4>📊 Seu desempenho detalhado:</h4>`;
-            historicoEscolhas.forEach((h, idx) => {
-                let statusIcon = '';
-                let statusColor = '';
-                if (h.justoMeio) {
-                    statusIcon = '✅';
-                    statusColor = 'var(--success)';
-                } else if (h.decisao === 'falta') {
-                    statusIcon = '❌';
-                    statusColor = 'var(--danger)';
-                } else {
-                    statusIcon = '⚠️';
-                    statusColor = 'var(--warning)';
-                }
-                resumoHtml += `<p style="margin: 8px 0;"><span style="color:${statusColor}">${statusIcon}</span> <strong>${idx+1}. ${h.cenario}</strong>: ${h.justoMeio ? 'Justo Meio ✓' : (h.decisao === 'falta' ? 'Falta' : 'Excesso')}</p>`;
-            });
-            resumoHtml += `<hr style="border-color:var(--border); margin: 16px 0;">`;
-            resumoHtml += `<p><strong>💭 Reflexão:</strong> ${conselhoFinal}</p>`;
-            
-            document.getElementById('resumoFinal').innerHTML = resumoHtml;
-        }
-
-        function reiniciarCompleto() {
-            currentCenarioIndex = 0;
-            historicoEscolhas = [];
-            tela1Div.style.display = 'block';
-            telaDilemaDiv.style.display = 'none';
-            telaEncerramentoDiv.style.display = 'none';
-        }
-
-        function iniciarDesafio() {
-            tela1Div.style.display = 'none';
-            telaDilemaDiv.style.display = 'block';
-            telaEncerramentoDiv.style.display = 'none';
-            currentCenarioIndex = 0;
-            historicoEscolhas = [];
-            carregarCenario(0);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            sliderElement = document.getElementById('decisaoSlider');
-            const confirmBtn = document.getElementById('confirmarDecisaoBtn');
-            const novoCenarioBtn = document.getElementById('novoCenarioBtn');
-            const encerrarBtn = document.getElementById('encerrarBtn');
-            const iniciarBtn = document.getElementById('iniciarDesafioBtn');
-            const recarregarBtn = document.getElementById('recarregarBtn');
-            const resetGlobalBtn = document.getElementById('resetBtn');
-            const highContrastBtn = document.getElementById('highContrastBtn');
-            const voltarInicioBtn = document.getElementById('voltarInicioBtn');
-
-            if (sliderElement) {
-                sliderElement.addEventListener('input', (e) => updateSliderLabel(parseInt(e.target.value, 10)));
-            }
-            if (confirmBtn) confirmBtn.addEventListener('click', onConfirmarDecisao);
-            if (novoCenarioBtn) novoCenarioBtn.addEventListener('click', novoCenario);
-            if (encerrarBtn) encerrarBtn.addEventListener('click', encerrarAtividade);
-            if (iniciarBtn) iniciarBtn.addEventListener('click', iniciarDesafio);
-            if (recarregarBtn) recarregarBtn.addEventListener('click', reiniciarCompleto);
-            if (resetGlobalBtn) resetGlobalBtn.addEventListener('click', reiniciarCompleto);
-            if (voltarInicioBtn) {
-                voltarInicioBtn.addEventListener('click', () => {
-                    window.location.href = 'https://lrpluciano-pereira.github.io/index.html';
-                });
-            }
-            if (highContrastBtn) {
-                highContrastBtn.addEventListener('click', () => {
-                    document.body.classList.toggle('high-contrast');
-                });
-            }
-            updateSliderLabel(50);
-        });
     </script>
 </body>
 </html>
